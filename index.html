@@ -25,7 +25,7 @@ html.light [class*="bg-slate-9"],html.light [class*="bg-slate-8"]:not(.card){bac
 html.light .text-slate-300,html.light .text-slate-400,html.light .text-slate-500{color:#475569!important}
 html.light .fi,html.light select,html.light input[type=number]{color:#0F172A}
 html.light .bg-bp,html.light .tab-on{color:#fff!important}
-@media print{header,button,#toast,[role=dialog],.sw,#layers,#filters,.sr-only{display:none!important}
+@media print{header,button,#toast,#deck,[role=dialog],.sw,#layers,#filters,.sr-only{display:none!important}
 body{background:#fff!important;color:#111!important}.grid-bg{background:none}
 .card{background:#fff!important;border-color:#bbb!important}
 [class*="bg-slate-"]{background:#f1f5f9!important}main *{color:#111!important}
@@ -36,6 +36,8 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
 .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s}
 .sw:checked::after{left:18px}
 .zone{transition:opacity .15s,stroke-width .15s}
+#L-equip g[data-i]:focus{outline:none}#L-equip g[data-i]:focus>rect:first-child{stroke:#F8FAFC;stroke-width:2.5}
+button:disabled{opacity:.4;cursor:not-allowed}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -47,9 +49,9 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
  <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
   <a href="#top" class="flex items-center gap-2 font-semibold shrink-0"><i data-lucide="ruler" class="w-5 h-5 text-bp"></i><span class="hidden sm:inline">HoReCa Spatial Design Thinking</span><span class="sm:hidden">HoReCa SDT</span></a>
   <nav class="hidden lg:flex gap-5 text-sm text-slate-400">
-   <a class="hover:text-white" href="#empathize">01. Empathize</a><a class="hover:text-white" href="#define">02. Define (SLP)</a><a class="hover:text-white" href="#ideate">03. Ideate (Specs)</a><a class="hover:text-white" href="#prototype">04. Prototype (CAD)</a><a class="hover:text-white" href="#deliver">05. Deliver</a>
+   <a class="hover:text-white" href="#empathize">01. Empathize</a><a class="hover:text-white" href="#define">02. Define (SLP)</a><a class="hover:text-white" href="#ideate">03. Ideate (Specs)</a><a class="hover:text-white" href="#prototype">04. Prototype (CAD)</a><a class="hover:text-white" href="#deliver">05. Deliver</a><a class="hover:text-white" href="#review">Review</a>
   </nav>
-  <div class="flex items-center gap-2 shrink-0"><button id="themeBtn" aria-pressed="false" aria-label="Toggle light theme" title="Light / dark" class="text-sm border border-slate-600 hover:border-bp rounded px-2.5 py-1.5"><i data-lucide="sun" class="w-4 h-4"></i></button><button onclick="saveProj()" title="Save project" class="text-sm border border-slate-600 hover:border-bp rounded px-3 py-1.5 flex items-center gap-2"><i data-lucide="save" class="w-4 h-4"></i><span class="hidden md:inline">Save</span></button><label title="Open project" class="cursor-pointer text-sm border border-slate-600 hover:border-bp rounded px-3 py-1.5 flex items-center gap-2"><i data-lucide="folder-open" class="w-4 h-4"></i><span class="hidden md:inline">Open</span><input id="openProj" type="file" accept=".json,application/json" class="sr-only"></label><button onclick="openModal('refModal')" class="text-sm border border-bp text-bp hover:bg-bp hover:text-white rounded px-3 py-1.5 flex items-center gap-2 shrink-0"><i data-lucide="book-open" class="w-4 h-4"></i>View Academic References</button></div>
+  <div class="flex items-center gap-2 shrink-0"><button id="presentBtn" title="Present the workflow full screen" class="text-sm border border-slate-600 hover:border-bp rounded px-3 py-1.5 flex items-center gap-2"><i data-lucide="presentation" class="w-4 h-4"></i><span class="hidden md:inline">Present</span></button><button id="themeBtn" aria-pressed="false" aria-label="Toggle light theme" title="Light / dark" class="text-sm border border-slate-600 hover:border-bp rounded px-2.5 py-1.5"><i data-lucide="sun" class="w-4 h-4"></i></button><button onclick="saveProj()" title="Save project" class="text-sm border border-slate-600 hover:border-bp rounded px-3 py-1.5 flex items-center gap-2"><i data-lucide="save" class="w-4 h-4"></i><span class="hidden md:inline">Save</span></button><label title="Open project" class="cursor-pointer text-sm border border-slate-600 hover:border-bp rounded px-3 py-1.5 flex items-center gap-2"><i data-lucide="folder-open" class="w-4 h-4"></i><span class="hidden md:inline">Open</span><input id="openProj" type="file" accept=".json,application/json" class="sr-only"></label><button onclick="openModal('refModal')" class="text-sm border border-bp text-bp hover:bg-bp hover:text-white rounded px-3 py-1.5 flex items-center gap-2 shrink-0"><i data-lucide="book-open" class="w-4 h-4"></i>View Academic References</button></div>
  </div>
 </header>
 
@@ -71,20 +73,12 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
 
 <!-- 01 EMPATHIZE -->
 <section id="empathize" class="scroll-mt-20">
- <h2 class="text-2xl font-semibold mb-1"><span class="font-mono text-bp">01.</span> Empathize: Operational &amp; Context Discovery</h2>
- <p class="text-slate-400 mb-6">Observe how staff actually move before a single line is drawn.</p>
+ <h2 class="text-2xl font-semibold mb-1"><span class="font-mono text-bp">01.</span> Empathize: Operational &amp; Context Discovery <span class="venueTag ml-2 align-middle text-xs font-mono px-2 py-0.5 rounded-full border border-slate-600 text-slate-400"></span></h2>
+ <p class="text-slate-400 mb-6">Observe how staff actually move before a single line is drawn. This content follows the venue chosen in the Prototype section.</p>
  <div class="grid lg:grid-cols-2 gap-6">
   <div class="space-y-4">
-   <div class="card p-5"><h3 class="font-semibold flex items-center gap-2"><i data-lucide="coffee" class="w-4 h-4 text-amber"></i>Barista journey</h3>
-    <p class="text-sm text-slate-400 mt-2">Grinder, espresso machine and milk fridge sit in a triangle. Every extra step repeats hundreds of times per shift.</p>
-    <dl class="grid grid-cols-2 gap-2 mt-3 font-mono text-xs"><div class="bg-slate-900 p-2 rounded"><dt class="text-slate-500">Reach limit</dt><dd>≤ 600 mm</dd></div><div class="bg-slate-900 p-2 rounded"><dt class="text-slate-500">Peak covers/hr</dt><dd>120</dd></div></dl></div>
-   <div class="card p-5"><h3 class="font-semibold flex items-center gap-2"><i data-lucide="flame" class="w-4 h-4 text-amber"></i>Line cook journey</h3>
-    <p class="text-sm text-slate-400 mt-2">Fridge to grill to pass is the critical path. Crossing the dish return slows tickets and raises burn and slip risk.</p>
-    <dl class="grid grid-cols-2 gap-2 mt-3 font-mono text-xs"><div class="bg-slate-900 p-2 rounded"><dt class="text-slate-500">Reach limit</dt><dd>≤ 650 mm</dd></div><div class="bg-slate-900 p-2 rounded"><dt class="text-slate-500">Peak covers/hr</dt><dd>80</dd></div></dl></div>
-   <div class="card p-5"><h3 class="font-semibold flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4 text-amber"></i>Friction points logged</h3>
-    <ul class="text-sm text-slate-400 mt-2 space-y-1 list-disc pl-5"><li>Dish return crosses the hot line</li><li>Walk-in fridge is far from prep</li><li>Pass is too narrow for two runners</li></ul>
-    <p class="mt-3 text-xs text-slate-500">Reach and cover figures are sample inputs. Replace with your own site observations.</p>
-    <p class="mt-2 text-xs">Sources: <button class="text-bp underline" onclick="openModal('refModal')">Flessas et al. (2015)</button>, <button class="text-bp underline" onclick="openModal('refModal')">Bindu et al. (2022)</button></p></div>
+   <div id="journeys" class="space-y-4"></div>
+   <p class="text-xs text-slate-500">Reach and peak figures are sample inputs. Replace them with your own site observations. Sources: <button class="text-bp underline" onclick="openModal('refModal')">Flessas et al. (2015)</button>, <button class="text-bp underline" onclick="openModal('refModal')">Bindu et al. (2022)</button></p>
   </div>
   <div class="card p-5 self-start">
    <h3 class="font-semibold flex items-center gap-2"><i data-lucide="clipboard-check" class="w-4 h-4 text-bp"></i>Site MEP Baseline Audit</h3>
@@ -101,7 +95,7 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
 
 <!-- 02 DEFINE -->
 <section id="define" class="scroll-mt-20">
- <h2 class="text-2xl font-semibold mb-1"><span class="font-mono text-bp">02.</span> Define: Systematic Layout Planning (SLP)</h2>
+ <h2 class="text-2xl font-semibold mb-1"><span class="font-mono text-bp">02.</span> Define: Systematic Layout Planning (SLP) <span class="venueTag ml-2 align-middle text-xs font-mono px-2 py-0.5 rounded-full border border-slate-600 text-slate-400"></span></h2>
  <p class="text-slate-400 mb-6">Rate how closely each pair of zones must sit. Select a cell to see the spatial rule.</p>
  <div class="grid lg:grid-cols-2 gap-6">
   <div class="card p-5">
@@ -118,9 +112,9 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
     <line x1="410" y1="130" x2="410" y2="190" stroke="#64748b" stroke-width="2" marker-end="url(#ar)"/>
     <g id="bubbles"></g>
     <path id="xLink" d="M90 135 C90 260 260 290 335 245" fill="none" stroke="#F59E0B" stroke-dasharray="5 5" stroke-width="2" opacity=".35"/>
-    <text x="150" y="285" fill="#F59E0B" font-size="11" font-family="JetBrains Mono" opacity=".8">X: keep raw prep away from dish return</text>
+    <text x="150" y="285" fill="#F59E0B" font-size="11" font-family="JetBrains Mono" opacity=".8" id="xText">X: keep raw prep away from dish return</text>
    </svg>
-   <p class="text-xs text-slate-500 mt-1">Workflow: Cold Prep → Thermal Cooking Line → Service Pass → Warewashing. Click a zone bubble to highlight its equipment in Ideate and Prototype.</p>
+   <p class="text-xs text-slate-500 mt-1"><span id="flowTxt">Workflow: Cold Prep → Thermal Cooking Line → Service Pass → Warewashing.</span> Click a zone bubble to highlight its equipment in Ideate and Prototype.</p>
   </div>
  </div>
 </section>
@@ -151,6 +145,8 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
     <g id="L-plumb" font-family="JetBrains Mono"></g>
     
     <g id="L-hood" font-family="JetBrains Mono"></g>
+    <g id="L-path" font-family="JetBrains Mono" font-size="10" pointer-events="none"></g>
+    <g id="L-acc" font-family="JetBrains Mono" font-size="10" pointer-events="none"></g>
     <g id="L-meas" font-family="JetBrains Mono" font-size="10" fill="#F8FAFC" pointer-events="none"></g>
     <g id="L-scale" font-family="JetBrains Mono"></g>
    </svg>
@@ -165,15 +161,19 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
    </div>
    <div id="layers" class="space-y-3 text-sm"></div>
    <div class="mt-5 pt-4 border-t border-slate-700 space-y-3 text-sm">
-    <p class="text-xs text-slate-400">Drag equipment, or focus a block and use the arrow keys. Drag the hood outline to move the whole cooking line; the hood resizes to fit it. Aisles under 900 mm are flagged between different zones. Equipment in the same zone, like the cooking line, is exempt, and so are neutral tables. Use one as a buffer between cold and hot equipment. A gap filled by another unit, like the bar top between underbar stations and stools, is not an aisle.</p>
+    <p class="text-xs text-slate-400">Drag equipment, or click a block and use the arrow keys. Press R to rotate it and Ctrl+Z to undo. Drag a hood outline to move its cooking line; hoods resize to fit, and cooking units more than 1 m apart get separate hoods. Aisles under 900 mm are flagged between different zones. Equipment in the same zone, like the cooking line, is exempt, and so are neutral tables. Use one as a buffer between cold and hot equipment. A gap filled by another unit, like the bar top between underbar stations and stools, is not an aisle.</p>
     <label class="flex items-center justify-between cursor-pointer">Snap to 100 mm<input id="snapSw" type="checkbox" checked class="sw"></label>
     <button id="measBtn" aria-pressed="false" class="w-full border border-slate-600 hover:border-bp rounded px-3 py-1.5">Measure distance</button>
     <div id="measOut" class="text-xs font-mono text-amber" aria-live="polite"></div>
+    <div class="grid grid-cols-3 gap-1 text-xs"><button id="undoBtn" disabled title="Undo (Ctrl+Z)" class="border border-slate-600 hover:border-bp rounded py-1.5">Undo</button><button id="redoBtn" disabled title="Redo (Ctrl+Shift+Z)" class="border border-slate-600 hover:border-bp rounded py-1.5">Redo</button><button id="rotBtn" title="Rotate selected block (R)" class="border border-slate-600 hover:border-bp rounded py-1.5">Rotate 90°</button></div>
+    <label class="block"><span class="fl">Add furniture</span><select id="furnSel" class="fi text-sm"><option value="">Choose a piece…</option><option value="table2">2-seat table</option><option value="table4">4-seat table</option><option value="stools">Bar stools, 2.4 m run</option><option value="bench">Bench seat, 2 m</option><option value="bartop">Bar top, 3 m</option></select></label>
     <button id="resetBlk" class="w-full border border-slate-600 hover:border-bp rounded px-3 py-1.5">Reset layout</button>
     <div id="clearList" class="text-xs font-mono space-y-1" aria-live="polite"></div>
     <div class="pt-3 border-t border-slate-700"><p class="text-xs text-slate-400">Drag drain, water and power points. Double-click a point to delete it.</p>
      <div class="flex gap-1 mt-2 text-xs"><button onclick="addM('drain')" class="flex-1 border border-slate-600 hover:border-bp rounded py-1">+ Drain</button><button onclick="addM('water')" class="flex-1 border border-slate-600 hover:border-bp rounded py-1">+ Water</button><button onclick="addM('power')" class="flex-1 border border-slate-600 hover:border-bp rounded py-1">+ Power</button></div>
      <div id="mepList" class="mt-2 text-xs font-mono space-y-1" aria-live="polite"></div></div>
+    <div class="pt-3 border-t border-slate-700"><p class="text-xs text-slate-400">Access and exits (indicative). Turn on the Access layer to see the turning space and the furthest point.</p>
+     <div id="accList" class="mt-2 text-xs font-mono space-y-1" aria-live="polite"></div></div>
    </div>
   </div>
  </div>
@@ -201,8 +201,25 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
   <p class="md:col-span-2 text-xs text-slate-500">Indicative only. Hood need uses typical code-style rates (CFM per linear foot: light 200, medium 300, heavy 400) from the hottest appliance under the hood; the grill is treated as heavy duty to be conservative. Confirm against local code and the hood manufacturer.</p>
  </div>
  <div class="card mt-4 overflow-x-auto">
-  <table class="w-full text-sm text-left"><thead class="bg-slate-900 text-slate-400 text-xs"><tr><th class="p-3">Item #</th><th class="p-3">Description</th><th class="p-3">Dimensions (mm)</th><th class="p-3">Utility Loads</th></tr></thead><tbody id="sched" class="font-mono text-xs"></tbody></table>
+  <table class="w-full text-sm text-left"><thead class="bg-slate-900 text-slate-400 text-xs"><tr><th class="p-3">Item #</th><th class="p-3">Description</th><th class="p-3">Dimensions (mm)</th><th class="p-3">Utility Loads</th><th class="p-3 text-right">Price</th></tr></thead><tbody id="sched" class="font-mono text-xs"></tbody></table>
   <div id="schedTotal" class="p-3 border-t border-slate-700 text-xs font-mono text-amber"></div>
+  <div class="px-3 pb-3 flex flex-wrap gap-x-4 gap-y-2 items-center text-xs text-slate-400"><label class="flex items-center gap-1">Currency <input id="curIn" maxlength="4" value="$" class="w-12 bg-slate-800 border border-slate-600 rounded px-1"></label><label class="flex items-center gap-1">Install &amp; MEP allowance <input id="instIn" type="number" min="0" max="200" value="15" class="w-14 bg-slate-800 border border-slate-600 rounded px-1"> %</label><span id="budget" class="font-mono text-amber"></span><span class="basis-full text-slate-500">Prices are indicative samples. Replace them with supplier quotes in each equipment card.</span></div>
+ </div>
+ <div class="grid lg:grid-cols-2 gap-4 mt-4">
+  <div class="card p-5">
+   <h3 class="font-semibold flex items-center gap-2"><i data-lucide="footprints" class="w-4 h-4 text-amber"></i>Staff walking routes</h3>
+   <p class="text-xs text-slate-400 mt-1">Each route is one task, from the first unit to the last. Distance runs along the aisles (across, then along) between the nearest edges of each unit, and ignores obstacles. Click a task to show it on the plan.</p>
+   <div class="overflow-x-auto mt-3"><table class="w-full text-xs"><thead class="text-slate-400"><tr><th class="text-left p-1.5 font-medium">Task</th><th class="text-right p-1.5 font-medium">m / order</th><th class="text-right p-1.5 font-medium">Orders / shift</th><th class="text-right p-1.5 font-medium">m / shift</th><th class="p-1.5"><span class="sr-only">Delete</span></th></tr></thead><tbody id="routeRows" class="font-mono"></tbody></table></div>
+   <p id="routeTotal" class="mt-2 text-xs font-mono text-amber" aria-live="polite"></p>
+   <div class="mt-3 flex flex-wrap gap-2 items-end text-sm"><label class="flex-1 min-w-[10rem]"><span class="fl">New route name</span><input id="routeName" class="fi" maxlength="40" placeholder="e.g. Plate a dessert"></label><button id="recBtn" class="border border-slate-600 hover:border-bp rounded px-3 py-1.5">Record on plan</button><button id="recCancel" class="hidden text-xs text-slate-400 underline">Cancel</button></div>
+   <p id="recHint" class="hidden text-xs text-amber mt-2" aria-live="polite"></p>
+  </div>
+  <div class="card p-5">
+   <h3 class="font-semibold flex items-center gap-2"><i data-lucide="git-compare" class="w-4 h-4 text-bp"></i>Compare layouts</h3>
+   <p class="text-xs text-slate-400 mt-1">Store two versions of the plan, then compare them side by side. Green marks the better value.</p>
+   <div class="grid grid-cols-2 gap-2 mt-3 text-xs"><button onclick="storeSlot('A')" class="border border-slate-600 hover:border-bp rounded py-1.5">Store current as A</button><button onclick="storeSlot('B')" class="border border-slate-600 hover:border-bp rounded py-1.5">Store current as B</button><button id="openA" onclick="loadSlot('A')" disabled class="border border-slate-600 hover:border-bp rounded py-1.5">Open A</button><button id="openB" onclick="loadSlot('B')" disabled class="border border-slate-600 hover:border-bp rounded py-1.5">Open B</button></div>
+   <div class="overflow-x-auto mt-3"><table id="cmpTable" class="w-full text-xs font-mono"></table></div>
+  </div>
  </div>
  <p class="mt-3 text-xs text-slate-500">Grounded in Bindu et al. (2022) CAD block allocation and clearance standards.</p>
 </section>
@@ -216,6 +233,16 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
   <div class="mt-5"><div class="flex justify-between text-xs text-slate-400 mb-1"><span>Verification progress</span><span id="pct" class="font-mono">0%</span></div><div class="h-2 bg-slate-900 rounded"><div id="bar" class="h-2 bg-bp rounded transition-all" style="width:0"></div></div></div>
   <button onclick="openModal('pkgModal')" class="mt-6 bg-bp hover:bg-blue-600 text-white rounded px-4 py-2 text-sm flex items-center gap-2"><i data-lucide="package" class="w-4 h-4"></i>Generate &amp; Download Construction Package</button>
   <button onclick="window.print()" class="mt-3 border border-slate-600 hover:border-bp rounded px-4 py-2 text-sm flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4"></i>Print / Save as PDF</button>
+ </div>
+</section>
+
+<!-- REVIEW -->
+<section id="review" class="scroll-mt-20">
+ <h2 class="text-2xl font-semibold mb-1">Review: test yourself</h2>
+ <p class="text-slate-400 mb-6">Questions on the method, plus a few built from the plan you have open. Switch to flashcards to revise.</p>
+ <div class="card p-5 max-w-3xl">
+  <div class="flex flex-wrap items-center gap-2 mb-4" role="tablist"><button id="qModeQuiz" role="tab" class="px-3 py-1.5 rounded text-sm tab-on">Quiz</button><button id="qModeCards" role="tab" class="px-3 py-1.5 rounded text-sm bg-slate-800 border border-slate-700 text-slate-300">Flashcards</button><span id="qProg" class="ml-auto text-xs font-mono text-slate-400"></span></div>
+  <div id="qBody" aria-live="polite"></div>
  </div>
 </section>
 </main>
@@ -246,6 +273,8 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
  <div class="card max-w-lg w-full p-6 max-h-[90vh] overflow-auto">
   <div class="flex justify-between items-start"><h3 id="eqTitle" class="text-lg font-semibold">Edit equipment</h3><button type="button" onclick="closeModals()" aria-label="Close"><i data-lucide="x" class="w-5 h-5"></i></button></div>
   <form id="eqForm" class="mt-4 grid grid-cols-2 gap-3 text-sm">
+   <label id="libBox" class="col-span-2"><span class="fl">Start from the library (fills the fields below)</span><select id="eqLib" class="fi"></select></label>
+   <input type="hidden" id="eqT">
    <label class="col-span-2"><span class="fl">Name</span><input id="eqN" class="fi" required></label>
    <label><span class="fl">Plan label (max 14)</span><input id="eqL" class="fi" maxlength="14"></label>
    <label><span class="fl">Zone</span><select id="eqZ" class="fi"><option value="cold">Cold storage</option><option value="hot">Cooking</option><option value="neutral">Neutral</option><option value="pass">Pass</option><option value="ware">Warewashing</option><option value="store">Storage</option><option value="foh">Guest area</option></select></label>
@@ -255,11 +284,17 @@ body{background:#fff!important;color:#111!important}.grid-bg{background:none}
    <label><span class="fl">Width (mm)</span><input id="eqW" type="number" min="100" step="50" class="fi"></label>
    <label><span class="fl">Depth (mm)</span><input id="eqDp" type="number" min="100" step="50" class="fi"></label>
    <label><span class="fl">Height (mm)</span><input id="eqH" type="number" min="100" step="50" class="fi"></label>
+   <label><span class="fl">Price (<span class="curSym">$</span>)</span><input id="eqCost" type="number" min="0" step="50" class="fi"></label>
    <div class="col-span-2 flex items-center gap-2 mt-2"><button type="button" id="eqDel" class="hidden text-red-400 border border-red-500/40 rounded px-3 py-1.5">Delete</button><button type="button" onclick="closeModals()" class="ml-auto border border-slate-600 rounded px-3 py-1.5">Cancel</button><button type="submit" class="bg-bp text-white rounded px-4 py-1.5">Save</button></div>
   </form>
  </div>
 </div>
 
+<div id="deck" class="hidden fixed inset-0 z-[80] bg-[#020617] text-slate-100 flex flex-col" role="dialog" aria-modal="true" aria-label="Presentation">
+ <div class="flex items-center justify-between gap-4 px-6 py-3 border-b border-slate-800 text-xs font-mono text-slate-400"><span id="deckTitle"></span><span id="deckNum"></span><button onclick="closeDeck()" class="border border-slate-600 rounded px-3 py-1 text-slate-300 hover:border-bp">Exit (Esc)</button></div>
+ <div id="deckBody" class="flex-1 overflow-auto px-6 md:px-16 py-8"></div>
+ <div class="flex items-center justify-between px-6 py-3 border-t border-slate-800"><button onclick="deckGo(-1)" class="border border-slate-600 rounded px-4 py-2 text-sm hover:border-bp">← Back</button><div id="deckDots" class="flex gap-2"></div><button id="deckNext" onclick="deckGo(1)" class="bg-bp text-white rounded px-4 py-2 text-sm">Next →</button></div>
+</div>
 <div id="toast" class="hidden fixed bottom-4 right-4 z-[60] bg-slate-800 border border-slate-600 rounded px-4 py-2 text-sm" role="status"></div>
 
 <script>
@@ -318,7 +353,7 @@ const EQ=[
  {id:7,n:'Refrigerated Prep Counter',kw:0.3,w:'None (condensate evaporated)',d:'1600 × 700 × 900',dim:[1600,700,900],t:'Cold storage'},
  {id:8,n:'Stainless Neutral Table',kw:0,w:'None',d:'1000 × 700 × 900',dim:[1000,700,900],t:'Neutral'}];
 let flt='All Specs';
-const FL=['All Specs','Electrical kW Draw','Plumbing Rough-ins','Physical Dimensions'];
+const FL=['All Specs','Electrical kW Draw','Plumbing Rough-ins','Physical Dimensions','Cost'];
 function drawEq(){
  $('#filters').innerHTML=FL.map(f=>`<button onclick="flt='${f}';drawEq()" class="px-3 py-1.5 rounded text-sm ${f===flt?'tab-on':'bg-slate-800 border border-slate-700 text-slate-300 hover:border-bp'}">${f}</button>`).join('')+`<button onclick="openEq(-1)" class="ml-auto px-3 py-1.5 rounded text-sm border border-bp text-bp hover:bg-bp hover:text-white">+ Add equipment</button>`;
  const row=(l,v,hot)=>`<div class="flex justify-between gap-3 py-1.5 border-b border-slate-700 text-sm"><span class="text-slate-400">${l}</span><span class="font-mono text-right ${hot?'text-amber':''}">${v}</span></div>`;
@@ -326,22 +361,23 @@ function drawEq(){
   if(['All Specs','Electrical kW Draw'].includes(flt))r+=row('Electrical',e.kw+' kW',flt!=='All Specs');
   if(['All Specs','Plumbing Rough-ins'].includes(flt))r+=row('Plumbing',e.w,flt!=='All Specs');
   if(['All Specs','Physical Dimensions'].includes(flt))r+=row('W × D × H (mm)',e.d,flt!=='All Specs');
+  if(['All Specs','Cost'].includes(flt))r+=row('Price',money(e.p||0),flt!=='All Specs');
   return `<article class="card p-5" style="${ZSEL?((BLK.find(q=>q.id===e.id)||{}).z===ZSEL?'border-color:#3B82F6':'opacity:.3'):''}"><p class="text-xs font-mono text-bp">ITEM ${e.id} · ${e.t}</p><h3 class="font-semibold mt-1 mb-3">${e.n}</h3>${r}<button onclick="openEq(${i})" class="mt-3 text-xs text-bp underline">Edit</button></article>`}).join('')}
 
 /* 04 CAD */
-const LY=[['L-arch','Architectural Boundary','Walls & columns'],['L-equip','Equipment Blocks','Counters, grills, fridges'],['L-elec','Electrical MEP Layer','Outlets & isolators'],['L-plumb','Plumbing MEP Layer','Inlets & floor drains'],['L-hood','Exhaust Canopy Layer','Hood perimeter & CFM']];
+const LY=[['L-arch','Architectural Boundary','Walls & columns'],['L-equip','Equipment Blocks','Counters, grills, fridges'],['L-elec','Electrical MEP Layer','Outlets & isolators'],['L-plumb','Plumbing MEP Layer','Inlets & floor drains'],['L-hood','Exhaust Canopy Layer','Hood perimeter & CFM'],['L-path','Staff Route Layer','Selected walking route'],['L-acc','Access Layer','Turning space & exit distance']];
 $('#layers').innerHTML=LY.map(l=>`<label class="flex items-center justify-between gap-3 cursor-pointer"><span>${l[1]}<br><span class="text-xs text-slate-500">${l[2]}</span></span><input type="checkbox" checked class="sw" data-l="${l[0]}"></label>`).join('');
 document.querySelectorAll('.sw[data-l]').forEach(s=>s.onchange=()=>{$('#'+s.dataset.l).style.display=s.checked?'':'none';sched();renderClear()});
 function sched(){
  const on=id=>$('#L-'+id.replace('L-',''))&&document.querySelector(`[data-l="${id}"]`).checked;
  const rows=[];
- if(on('L-equip'))EQ.forEach(e=>rows.push([e.id,e.n,e.d,`${e.kw} kW`+(e.w.startsWith('None')?'':' · water/drain')]));
- if(on('L-elec'))rows.push(['E1','Main isolator & distribution panel','—',PANEL+' kW 3-phase']);
- if(on('L-plumb'))rows.push(['P1',`Floor drains (${cnt('drain')}) + water points (${cnt('water')})`,'—','3/4" water, 2" drain']);
- if(on('L-hood'))rows.push(['H1','Exhaust canopy',HD,CFM+' CFM']);
- $('#sched').innerHTML=rows.length?rows.map(r=>`<tr class="border-t border-slate-700"><td class="p-3 text-bp">${r[0]}</td><td class="p-3 font-sans">${r[1]}</td><td class="p-3">${r[2]}</td><td class="p-3">${r[3]}</td></tr>`).join(''):'<tr><td colspan="4" class="p-4 text-slate-500 font-sans">All schedule layers are off.</td></tr>';
+ if(on('L-equip'))EQ.forEach(e=>rows.push([e.id,e.n,e.d,`${e.kw} kW`+(e.w.startsWith('None')?'':' · water/drain'),money(e.p||0)]));
+ if(on('L-elec'))rows.push(['E1','Main isolator & distribution panel','—',PANEL+' kW 3-phase','—']);
+ if(on('L-plumb'))rows.push(['P1',`Floor drains (${cnt('drain')}) + water points (${cnt('water')})`,'—','3/4" water, 2" drain','—']);
+ if(on('L-hood'))rows.push(['H1','Exhaust canopy',HD,CFM+' CFM','—']);
+ $('#sched').innerHTML=rows.length?rows.map(r=>`<tr class="border-t border-slate-700"><td class="p-3 text-bp">${r[0]}</td><td class="p-3 font-sans">${r[1]}</td><td class="p-3">${r[2]}</td><td class="p-3">${r[3]}</td><td class="p-3 text-right">${r[4]}</td></tr>`).join(''):'<tr><td colspan="5" class="p-4 text-slate-500 font-sans">All schedule layers are off.</td></tr>';
  const kw=on('L-equip')?EQ.reduce((a,e)=>a+e.kw,0):0;
- $('#schedTotal').textContent=`Connected equipment load: ${kw} kW of ${PANEL} kW panel (${Math.round(kw/PANEL*100)}%)`;updateLoad()}
+ $('#schedTotal').textContent=`Connected equipment load: ${kw} kW of ${PANEL} kW panel (${Math.round(kw/PANEL*100)}%)`;renderBudget();updateLoad()}
 $('#cad').addEventListener('mousemove',e=>{const p=svgPt(e);$('#cursor').textContent=`X: ${Math.max(0,Math.round((p.x-RX)*U))} Y: ${Math.max(0,Math.round((p.y-RY)*U))} mm`});
 
 /* Clearance checker */
@@ -391,19 +427,22 @@ function detail(b){const w=b.w,h=b.h;let d='';
  return d}
 function renderBlocks(){
  $('#L-equip').innerHTML=BLK.map((b,i)=>{const c=CZ[b.z],dm=`${Math.round(b.w*U/50)*50}×${Math.round(b.h*U/50)*50}`;
-  return `<g data-i="${i}" tabindex="0" transform="translate(${b.x} ${b.y})" style="cursor:grab;touch-action:none;opacity:${ZSEL&&b.z!==ZSEL?.25:1}" aria-label="${b.n}"><rect width="${b.w}" height="${b.h}" fill="${c}22" stroke="${c}" stroke-width="1.5"/><g fill="none" stroke="${c}" stroke-opacity=".6" pointer-events="none">${detail(b)}</g>${blkLabel(b,c,dm)}</g>`}).join('');
+  return `<g data-i="${i}" tabindex="0" transform="translate(${b.x} ${b.y})" style="cursor:grab;touch-action:none;opacity:${ZSEL&&b.z!==ZSEL?.25:1}" aria-label="${b.n}"><rect width="${b.w}" height="${b.h}" fill="${c}22" stroke="${c}" stroke-width="1.5"/>${detailG(b,c)}${blkLabel(b,c,dm)}</g>`}).join('');
  renderLegend();renderHood()}
 function sync(i){$('#L-equip').children[i].setAttribute('transform',`translate(${BLK[i].x} ${BLK[i].y})`)}
+function hotGroups(){const g=[];BLK.forEach((b,i)=>{if(b.z!=='hot')return;const near=g.filter(G=>G.some(j=>gapOf(b,BLK[j]).d<=1000)),m=[i].concat(...near);near.forEach(G=>g.splice(g.indexOf(G),1));g.push(m)});return g}
 function renderHood(){
- const H=BLK.filter(b=>b.z==='hot');if(!H.length){$('#L-hood').innerHTML='';HL=0;HD='—';sched();return}
- const x1=Math.min(...H.map(b=>b.x))-9,y1=Math.min(...H.map(b=>b.y))-6,x2=Math.max(...H.map(b=>b.x+b.w))+9,y2=Math.max(...H.map(b=>b.y+b.h))+18;
- HD=`${Math.round((x2-x1)*U/50)*50} × ${Math.round((y2-y1)*U/50)*50}`;
- HL=(x2-x1)*U/304.8;$('#L-hood').innerHTML=`<rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="#F59E0B10" stroke="#F59E0B" stroke-dasharray="3 3" pointer-events="none"/><rect data-hood x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="none" stroke="transparent" stroke-width="10" pointer-events="stroke" style="cursor:move;touch-action:none"/><g data-hood fill="#F59E0B" font-size="10" style="cursor:move;touch-action:none"><text x="${x2+6}" y="${y1+10}">HOOD · drag</text><text x="${x2+6}" y="${y1+22}" fill="#94A3B8" font-size="9">${CFM} CFM</text><text x="${x2+6}" y="${y1+33}" fill="#94A3B8" font-size="9">${HD} mm</text></g>`;
+ const G=hotGroups();if(!G.length){$('#L-hood').innerHTML='';HL=0;HD='—';sched();return}
+ let html='',dims=[];HL=0;
+ G.forEach((ix,k)=>{const H=ix.map(i=>BLK[i]),x1=Math.min(...H.map(b=>b.x))-9,y1=Math.min(...H.map(b=>b.y))-6,x2=Math.max(...H.map(b=>b.x+b.w))+9,y2=Math.max(...H.map(b=>b.y+b.h))+18,dm=`${Math.round((x2-x1)*U/50)*50} × ${Math.round((y2-y1)*U/50)*50}`;
+  HL+=(x2-x1)*U/304.8;dims.push(dm);const nm=G.length>1?'HOOD '+(k+1):'HOOD';
+  html+=`<rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="#F59E0B10" stroke="#F59E0B" stroke-dasharray="3 3" pointer-events="none"/><rect data-hood="${k}" x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="none" stroke="transparent" stroke-width="10" pointer-events="stroke" style="cursor:move;touch-action:none"/><g data-hood="${k}" fill="#F59E0B" font-size="10" style="cursor:move;touch-action:none"><text x="${x2+6}" y="${y1+10}">${nm} · drag</text>${k?'':`<text x="${x2+6}" y="${y1+22}" fill="#94A3B8" font-size="9">${CFM} CFM total</text>`}<text x="${x2+6}" y="${y1+(k?22:33)}" fill="#94A3B8" font-size="9">${dm} mm</text></g>`});
+ HD=dims.join(' + ');$('#L-hood').innerHTML=html;
  sched()}
 function place(i,x,y){const b=BLK[i],st=$('#snapSw').checked?6:1;
  const B=BD();b.x=Math.min(B.x1-b.w,Math.max(B.x0,Math.round(x/st)*st));b.y=Math.min(B.y1-b.h,Math.max(B.y0,Math.round(y/st)*st));
  sync(i);renderHood();renderClear()}
-function moveHot(dx,dy){const ix=BLK.map((b,i)=>i).filter(i=>BLK[i].z==='hot'),O=drag.o,st=$('#snapSw').checked?6:1;
+function moveHot(dx,dy){const ix=drag.ix,O=drag.o;if(!ix.length)return;const _=0,st=$('#snapSw').checked?6:1;
  dx=Math.round(dx/st)*st;dy=Math.round(dy/st)*st;
  const B=BD();dx=Math.max(B.x0+9-Math.min(...ix.map(i=>O[i].x)),Math.min(B.x1-9-Math.max(...ix.map(i=>O[i].x+BLK[i].w)),dx));
  dy=Math.max(B.y0+6-Math.min(...ix.map(i=>O[i].y)),Math.min(B.y1-18-Math.max(...ix.map(i=>O[i].y+BLK[i].h)),dy));
@@ -421,24 +460,25 @@ function renderClear(){
   if(r.over){list.push(`${nm}: overlap`);svg+=`<rect x="${Math.max(a.x,b.x)}" y="${Math.max(a.y,b.y)}" width="${Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x)}" height="${Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y)}" fill="#EF444466"/>`}
   else if(a.z!==b.z&&a.z!=='neutral'&&b.z!=='neutral'&&r.d>TOUCH&&r.d<MIN&&!filled(a,b)){const[x1,y1,x2,y2]=segOf(a,b);list.push(`${nm}: ${Math.round(r.d)} mm`);
    svg+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#EF4444" stroke-width="2" stroke-dasharray="4 3"/><text x="${(x1+x2)/2+6}" y="${(y1+y2)/2}" fill="#EF4444">${Math.round(r.d)} mm</text>`}}
- $('#L-clear').innerHTML=svg;setAuto(0,!list.length);mepCheck();
+ $('#L-clear').innerHTML=svg;CLR_N=list.length;setAuto(0,!list.length);mepCheck();renderRoutes();accSoon();
  $('#clearList').innerHTML=list.length?list.map(t=>`<div class="text-red-400">✗ ${t} (min ${MIN})</div>`).join(''):`<div class="text-green-400">✓ All aisles ≥ ${MIN} mm</div>`}
 function svgPt(e){const s=$('#cad'),p=s.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(s.getScreenCTM().inverse())}
 let drag=null;
 $('#L-equip').addEventListener('pointerdown',e=>{const g=e.target.closest('g[data-i]');if(!g)return;const i=+g.dataset.i,p=svgPt(e);drag={i,ox:p.x-BLK[i].x,oy:p.y-BLK[i].y};g.style.cursor='grabbing';g.focus();e.preventDefault()});
-$('#L-hood').addEventListener('pointerdown',e=>{if(!e.target.closest('[data-hood]'))return;const p=svgPt(e);drag={hood:1,sx:p.x,sy:p.y,o:BLK.map(b=>({x:b.x,y:b.y}))};e.preventDefault()});
+$('#L-hood').addEventListener('pointerdown',e=>{if(!e.target.closest('[data-hood]'))return;const p=svgPt(e);drag={hood:1,ix:hotGroups()[+e.target.closest('[data-hood]').dataset.hood]||[],sx:p.x,sy:p.y,o:BLK.map(b=>({x:b.x,y:b.y}))};e.preventDefault()});
 window.addEventListener('pointermove',e=>{if(!drag)return;const p=svgPt(e);if(drag.hood)moveHot(p.x-drag.sx,p.y-drag.sy);else if(drag.m!==undefined)moveM(drag.m,p.x-drag.ox,p.y-drag.oy);else place(drag.i,p.x-drag.ox,p.y-drag.oy)});
 window.addEventListener('pointerup',()=>{if(drag&&drag.i!==undefined)$('#L-equip').children[drag.i].style.cursor='grab';drag=null});
-$('#L-equip').addEventListener('keydown',e=>{const g=e.target.closest('g[data-i]'),d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];if(!g||!d)return;
+$('#L-equip').addEventListener('keydown',e=>{const g=e.target.closest('g[data-i]');if(g&&(e.key==='r'||e.key==='R')&&!e.ctrlKey&&!e.metaKey){rotateBlk(+g.dataset.i);e.preventDefault();return}
+ const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];if(!g||!d)return;nudgeHist();
  const i=+g.dataset.i,st=$('#snapSw').checked?6:1;place(i,BLK[i].x+d[0]*st,BLK[i].y+d[1]*st);e.preventDefault()});
-$('#resetBlk').onclick=()=>{ROOM=JSON.parse(JSON.stringify(ROOM0));renderRoom();const k=b=>b.id||b.n;BLK.forEach(b=>{const o=BLK0.find(q=>k(q)===k(b));if(o){b.x=o.x;b.y=o.y}});MEPS.length=0;MEPS.push(...JSON.parse(JSON.stringify(MEPS0)));renderMEP();renderBlocks();renderClear()};
+$('#resetBlk').onclick=()=>{hist();ROOM=JSON.parse(JSON.stringify(ROOM0));renderRoom();const k=b=>b.id||b.n;BLK.forEach(b=>{const o=BLK0.find(q=>k(q)===k(b));if(o){b.x=o.x;b.y=o.y}});MEPS.length=0;MEPS.push(...JSON.parse(JSON.stringify(MEPS0)));renderMEP();renderBlocks();renderClear()};
 
 /* Room geometry: 1 SVG unit = 16.67 mm, room corner at (40,40). The viewBox grows with the room. */
 const RX=40,RY=40;
 const ROOMS={
  restaurant:{name:'KITCHEN-A',w:12000,d:6000,door:{x:380,len:54},wy:170,areas:[]},
  cafe:{name:'CAFE-A',w:11000,d:7000,door:{x:600,len:60},wy:134,areas:[{x:46,y:46,w:441,h:114,l:'BARISTA & BACK COUNTER',c:'#3B82F6'},{x:46,y:236,w:648,h:218,l:'GUEST SEATING',c:'#C084FC'}]},
- bar:{name:'BAR-A',w:10000,d:6000,door:{x:520,len:60},wy:132,areas:[{x:46,y:262,w:588,h:132,l:'LOUNGE',c:'#C084FC'}]}};
+ bar:{name:'BAR-A',w:10000,d:6500,door:{x:520,len:60},wy:132,areas:[{x:46,y:262,w:588,h:162,l:'LOUNGE',c:'#C084FC'}]}};
 let ROOM=JSON.parse(JSON.stringify(ROOMS.restaurant)),ROOM0=JSON.parse(JSON.stringify(ROOM));
 function BD(){return{x0:RX+6,y0:RY+6,x1:RX+ROOM.w/U-6,y1:RY+ROOM.d/U-6}}
 function setRoom(r){const N=(v,d,lo,hi)=>{v=+v;return Number.isFinite(v)?Math.min(hi,Math.max(lo,v)):d},col=c=>/^#[0-9A-Fa-f]{6}$/.test(c)?c:'#94A3B8';
@@ -471,7 +511,7 @@ function blkLabel(b,c,dm){const R=b.x+b.w>BD().x1-60,ax=R?` x="${b.w}" text-anch
  if(b.lp==='low')return `<text y="${b.h+31}"${ax} fill="${c}" pointer-events="none">${tag}</text>`;
  if(b.lp==='top'||b.lp==='top2')return `<text y="${b.lp==='top'?-4:-17}"${ax} fill="${c}" pointer-events="none">${tag}</text>`;
  return `<text y="${b.h+11}"${ax} fill="${c}" pointer-events="none">${tag}</text><text y="${b.h+21}"${ax} fill="#64748B" font-size="8" pointer-events="none">${dm}</text>`}
-function resizeRoom(){
+function resizeRoom(){hist();
  ROOM.w=Math.round(Math.min(20000,Math.max(3000,+$('#roomW').value||ROOM.w))/100)*100;ROOM.d=Math.round(Math.min(12000,Math.max(3000,+$('#roomD').value||ROOM.d))/100)*100;
  const B=BD();BLK.forEach(b=>{b.x=Math.max(B.x0,Math.min(B.x1-b.w,b.x));b.y=Math.max(B.y0,Math.min(B.y1-b.h,b.y))});
  MEPS.forEach(m=>{m.x=Math.max(B.x0-4,Math.min(B.x1+4,m.x));m.y=Math.max(B.y0-4,Math.min(B.y1+4,m.y))});
@@ -489,7 +529,7 @@ function updateLoad(){
  $('#elConn').textContent=kw.toFixed(1)+' kW';$('#elDem').textContent=dem.toFixed(1)+' kW';
  $('#elBar').style.width=Math.min(pct,100)+'%';$('#elBar').className='h-2 rounded '+(pct>100?'bg-red-500':pct>85?'bg-amber':'bg-green-500');
  $('#elStat').innerHTML=pct>100?`<span class="text-red-400">✗ ${(dem-PANEL).toFixed(1)} kW over the ${PANEL} kW panel</span>`:pct>85?`<span class="text-amber">! ${Math.round(pct)}% of panel, little spare capacity</span>`:`<span class="text-green-400">✓ ${Math.round(pct)}% of the ${PANEL} kW panel</span>`;
- setAuto(3,pct<=100);
+ LOADP=pct;setAuto(3,pct<=100);
  const hot=BLK.filter(b=>b.z==='hot'&&eqOf(b.id)?.duty),di=hot.reduce((m,b)=>Math.max(m,ORD.indexOf(eqOf(b.id).duty)),0),rate=RATE[ORD[di]];
  REQ=Math.round(HL*rate/100)*100;const hp=REQ?CFM/REQ*100:100;
  $('#hdLen').textContent=HL.toFixed(1)+' ft';$('#hdDuty').textContent=ORD[di]+' · '+rate+'/ft';$('#hdReq').textContent=REQ+' CFM';
@@ -510,7 +550,7 @@ function openEq(i){EDIT=i;DEL=false;
  const e=i<0?{n:'',kw:0,dim:[1000,700,900],w:'None',duty:'medium'}:EQ[i],b=i<0?{n:'',z:'cold'}:(BLK.find(q=>q.id===e.id)||{n:e.n,z:'cold'});
  $('#eqTitle').textContent=i<0?'Add equipment':'Edit equipment';
  const set=(id,v)=>{$('#'+id).value=v};
- set('eqN',e.n);set('eqL',b.n);set('eqZ',b.z);set('eqD',e.duty||'medium');set('eqKW',e.kw);set('eqW',e.dim[0]);set('eqDp',e.dim[1]);set('eqH',e.dim[2]);set('eqP',e.w);
+ set('eqLib','');set('eqT','');$('#libBox').classList.toggle('hidden',i>=0);set('eqN',e.n);set('eqL',b.n);set('eqZ',b.z);set('eqD',e.duty||'medium');set('eqKW',e.kw);set('eqW',e.dim[0]);set('eqDp',e.dim[1]);set('eqH',e.dim[2]);set('eqP',e.w);set('eqCost',e.p||0);
  $('#eqDutyBox').classList.toggle('hidden',b.z!=='hot');$('#eqDel').classList.toggle('hidden',i<0);$('#eqDel').textContent='Delete';
  openModal('eqModal')}
 function spot(b){
@@ -518,17 +558,17 @@ function spot(b){
  const B=BD(),mid=Math.round((B.y0+B.y1)/12)*6;
  for(const strict of[true,false])for(const y0 of[mid,B.y0])for(let y=y0;y<=B.y1-b.h;y+=6)for(let x=B.x0;x<=B.x1-b.w;x+=6){b.x=x;b.y=y;if(!bad(strict))return}
  b.x=B.x0;b.y=Math.max(B.y0,B.y1-b.h)}
-$('#eqForm').onsubmit=ev=>{ev.preventDefault();
+$('#eqForm').onsubmit=ev=>{ev.preventDefault();hist();
  const v=id=>$('#'+id).value,z=v('eqZ'),dim=[+v('eqW'),+v('eqDp'),+v('eqH')].map(x=>Math.max(100,x||100));
- const e={n:clean(v('eqN').trim(),1)||'Unnamed equipment',kw:Math.max(0,+v('eqKW')||0),w:clean(v('eqP').trim())||'None',dim,d:dim.join(' × '),t:ZN[z],duty:z==='hot'?v('eqD'):undefined};
+ const e={n:clean(v('eqN').trim(),1)||'Unnamed equipment',kw:Math.max(0,+v('eqKW')||0),w:clean(v('eqP').trim())||'None',dim,d:dim.join(' × '),t:ZN[z],duty:z==='hot'?v('eqD'):undefined,p:Math.max(0,Math.round(+v('eqCost')||0))};
  const lbl=(clean(v('eqL').trim(),1)||e.n).toUpperCase().slice(0,14),w=mm2u(dim[0]),h=mm2u(dim[1]);
- if(EDIT<0){e.id=Math.max(0,...EQ.map(q=>q.id))+1;EQ.push(e);const b={id:e.id,n:lbl,t:'generic',z,x:46,y:46,w,h};BLK.push(b);spot(b)}
+ if(EDIT<0){e.id=Math.max(0,...EQ.map(q=>q.id))+1;EQ.push(e);const b={id:e.id,n:lbl,t:v('eqT')||'generic',z,x:46,y:46,w,h};BLK.push(b);spot(b)}
  else{const old=EQ[EDIT];Object.assign(old,e);const b=BLK.find(q=>q.id===old.id);
-  if(b){Object.assign(b,{n:lbl,z,w,h});const B=BD();b.x=Math.max(B.x0,Math.min(B.x1-w,b.x));b.y=Math.max(B.y0,Math.min(B.y1-h,b.y))}}
+  if(b){const q=(b.rot||0)%180;Object.assign(b,{n:lbl,z,w:q?h:w,h:q?w:h});const B=BD();b.x=Math.max(B.x0,Math.min(B.x1-b.w,b.x));b.y=Math.max(B.y0,Math.min(B.y1-b.h,b.y))}}
  refreshAll();closeModals()};
 $('#eqZ').onchange=e=>$('#eqDutyBox').classList.toggle('hidden',e.target.value!=='hot');
 $('#eqDel').onclick=()=>{if(!DEL){DEL=true;$('#eqDel').textContent='Click again to delete';return}
- const id=EQ[EDIT].id,k=BLK.findIndex(b=>b.id===id);EQ.splice(EDIT,1);if(k>=0)BLK.splice(k,1);refreshAll();closeModals()};
+ hist(); const id=EQ[EDIT].id,k=BLK.findIndex(b=>b.id===id);EQ.splice(EDIT,1);if(k>=0)BLK.splice(k,1);refreshAll();closeModals()};
 
 /* Movable MEP points */
 const MEPS=[
@@ -552,33 +592,38 @@ function mepCheck(){
   if(/water/i.test(e.w)&&!near(b,'water'))bad.push(`${b.n}: no water point within ${MIN} mm`);
   if(e.kw>0.5&&!near(b,'power'))bad.push(`${b.n}: no power point within ${MIN} mm`)});
  $('#mepList').innerHTML=bad.length?bad.map(t=>`<div class="text-red-400">✗ ${t}</div>`).join(''):'<div class="text-green-400">✓ MEP points near all equipment</div>';
- setAuto(2,!bad.length);
+ MEP_N=bad.length;setAuto(2,!bad.length);
 }
 function moveM(i,x,y){const m=MEPS[i],st=$('#snapSw').checked?6:1;const B=BD();m.x=Math.min(B.x1+4,Math.max(B.x0-4,Math.round(x/st)*st));m.y=Math.min(B.y1+4,Math.max(B.y0-4,Math.round(y/st)*st));renderMEP();mepCheck()}
 ['#L-elec','#L-plumb'].forEach(q=>{const el=$(q);
  el.addEventListener('pointerdown',e=>{const g=e.target.closest('g[data-m]');if(!g)return;const i=+g.dataset.m,p=svgPt(e);drag={m:i,ox:p.x-MEPS[i].x,oy:p.y-MEPS[i].y};e.preventDefault()});
- el.addEventListener('dblclick',e=>{const g=e.target.closest('g[data-m]');if(!g)return;MEPS.splice(+g.dataset.m,1);renderMEP();mepCheck()});
+ el.addEventListener('dblclick',e=>{const g=e.target.closest('g[data-m]');if(!g)return;hist();MEPS.splice(+g.dataset.m,1);renderMEP();mepCheck()});
  el.addEventListener('keydown',e=>{const g=e.target.closest('g[data-m]');if(!g)return;const i=+g.dataset.m;
-  if(e.key==='Delete'||e.key==='Backspace'){MEPS.splice(i,1);renderMEP();mepCheck();e.preventDefault();return}
-  const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];if(!d)return;const st=$('#snapSw').checked?6:1;
+  if(e.key==='Delete'||e.key==='Backspace'){hist();MEPS.splice(i,1);renderMEP();mepCheck();e.preventDefault();return}
+  const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];if(!d)return;nudgeHist();const st=$('#snapSw').checked?6:1;
   moveM(i,MEPS[i].x+d[0]*st,MEPS[i].y+d[1]*st);const n=$('#cad').querySelector(`g[data-m="${i}"]`);if(n)n.focus();e.preventDefault()})});
-function addM(k){const B=BD();MEPS.push({k,x:Math.round((B.x0+B.x1)/2)+(MEPS.length%8)*12,y:Math.round((B.y0+B.y1)/2)});renderMEP();mepCheck()}
+function addM(k){hist();const B=BD();MEPS.push({k,x:Math.round((B.x0+B.x1)/2)+(MEPS.length%8)*12,y:Math.round((B.y0+B.y1)/2)});renderMEP();mepCheck()}
 
 /* Save / open project */
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.add('hidden'),3500)}
 function saveProj(){
  const st={app:'horeca-sdt',v:1,saved:new Date().toISOString(),panel:PANEL,diversity:DIV,cfm:CFM,snap:$('#snapSw').checked,
-  layers:Object.fromEntries([...document.querySelectorAll('.sw[data-l]')].map(c=>[c.dataset.l,c.checked])),room:ROOM,eq:EQ,blocks:BLK,mep:MEPS,checks:[...done]};
+  layers:Object.fromEntries([...document.querySelectorAll('.sw[data-l]')].map(c=>[c.dataset.l,c.checked])),venue:VENUE,routes:ROUTES,slots:SLOTS,cur:CUR,inst:INST,room:ROOM,eq:EQ,blocks:BLK,mep:MEPS,checks:[...done]};
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(st,null,2)],{type:'application/json'}));a.download='horeca-project.json';a.click();URL.revokeObjectURL(a.href);toast('Project saved as horeca-project.json')}
-function loadProj(text){
+function loadProj(text,opt){opt=opt||{};
  const N=(v,d,lo,hi)=>{v=+v;return Number.isFinite(v)?Math.min(hi,Math.max(lo,v)):d};
  let d;try{d=JSON.parse(text)}catch(e){return toast('That file is not valid JSON.')}
  if(!d||d.app!=='horeca-sdt'||![d.eq,d.blocks,d.mep].every(Array.isArray))return toast('That file is not a HoReCa project.');
+ if(!opt.hist)hist();
  setRoom(d.room);const B=BD();
+ ROUTES=(Array.isArray(d.routes)?d.routes:[]).slice(0,20).map(r=>({name:clean(r&&r.name||'Route',1).slice(0,40)||'Route',stops:(Array.isArray(r&&r.stops)?r.stops:[]).slice(0,20).map(k=>clean(k,1).slice(0,30)),n:N(r&&r.n,50,0,10000)|0}));RSEL=Math.min(RSEL,Math.max(0,ROUTES.length-1));
+ if(!opt.hist&&d.slots&&typeof d.slots==='object')['A','B'].forEach(k=>{const z=d.slots[k];if(z&&typeof z.s==='string'&&z.m&&typeof z.m==='object'){const m={};Object.keys(z.m).slice(0,20).forEach(q=>{m[clean(q,1).slice(0,12)]=typeof z.m[q]==='number'?z.m[q]:clean(z.m[q],1).slice(0,40)});SLOTS[k]={m,s:z.s.slice(0,600000),t:clean(z.t||'',1).slice(0,20)}}});
+ setVenue(VENUES[d.venue]?d.venue:'restaurant');
+ if(!opt.hist&&d.cur!==undefined){CUR=clean(d.cur,1).slice(0,4);INST=N(d.inst,15,0,200);$('#curIn').value=CUR;$('#instIn').value=INST;document.querySelectorAll('.curSym').forEach(x=>x.textContent=CUR)}
  const eq=d.eq.slice(0,60).map(e=>{const dim=[0,1,2].map(i=>N(e.dim&&e.dim[i],1000,100,10000));
-  return{id:N(e.id,0,1,999)|0,n:clean(e.n||'Equipment',1).slice(0,60),kw:N(e.kw,0,0,500),w:clean(e.w||'None').slice(0,80),dim,d:dim.join(' × '),t:clean(e.t||'',1).slice(0,20),duty:ORD.includes(e.duty)?e.duty:undefined}});
+  return{id:N(e.id,0,1,999)|0,n:clean(e.n||'Equipment',1).slice(0,60),kw:N(e.kw,0,0,500),w:clean(e.w||'None').slice(0,80),dim,d:dim.join(' × '),t:clean(e.t||'',1).slice(0,20),duty:ORD.includes(e.duty)?e.duty:undefined,p:Math.round(N(e.p,0,0,1e7))}});
  const bl=d.blocks.slice(0,80).map(b=>{const w=N(b.w,60,12,700),h=N(b.h,40,12,350);
-  return{id:N(b.id,0,0,999)|0,n:clean(b.n||'',1).slice(0,16),t:clean(b.t||'generic',1).slice(0,12),z:CZ[b.z]?b.z:'cold',w,h,x:N(b.x,B.x0,B.x0,B.x1-w),y:N(b.y,B.y0,B.y0,B.y1-h),lp:['top','top2','in','low'].includes(b.lp)?b.lp:undefined}});
+  return{id:N(b.id,0,0,999)|0,n:clean(b.n||'',1).slice(0,16),t:clean(b.t||'generic',1).slice(0,12),z:CZ[b.z]?b.z:'cold',w,h,x:N(b.x,B.x0,B.x0,B.x1-w),y:N(b.y,B.y0,B.y0,B.y1-h),lp:['top','top2','in','low'].includes(b.lp)?b.lp:undefined,rot:[90,180,270].includes(+b.rot)?+b.rot:undefined}});
  const me=d.mep.slice(0,200).filter(m=>['drain','water','power'].includes(m.k)).map(m=>({k:m.k,x:N(m.x,B.x0,B.x0-4,B.x1+4),y:N(m.y,B.y0,B.y0-4,B.y1+4)}));
  EQ.length=0;EQ.push(...eq);BLK.length=0;BLK.push(...bl);MEPS.length=0;MEPS.push(...me);
  const set=(id,v,ev)=>{const el=$('#'+id);el.value=v;el.dispatchEvent(new Event(ev))};
@@ -588,12 +633,12 @@ function loadProj(text){
  $('#snapSw').checked=d.snap!==false;
  document.querySelectorAll('.sw[data-l]').forEach(c=>{if(d.layers&&c.dataset.l in d.layers)c.checked=!!d.layers[c.dataset.l];$('#'+c.dataset.l).style.display=c.checked?'':'none'});
  done.clear();(d.checks||[]).forEach(i=>{if(Number.isInteger(i)&&i>=0&&i<CK.length)done.add(i)});
- renderRoom();renderMEP();refreshAll();snapBase();toast('Project loaded.')}
+ renderRoom();renderMEP();refreshAll();if(!opt.hist){snapBase();toast('Project loaded.')}}
 $('#openProj').onchange=e=>{const f=e.target.files[0];if(f)f.text().then(loadProj);e.target.value=''};
 
 /* Presets, zone link, measure, theme */
 const PRESETS={
- cafe:{app:'horeca-sdt',v:1,label:'Café',panel:25,diversity:1,cfm:1200,room:ROOMS.cafe,
+ cafe:{app:'horeca-sdt',v:1,venue:'cafe',label:'Café',routes:[{name:'Make a latte',stops:['#10','#1','#2','#1','#11'],n:200},{name:'Toast a panini',stops:['#5','#3','#11'],n:60},{name:'Clear a table',stops:['TABLE 5','#11','#6'],n:40}],panel:25,diversity:1,cfm:1200,room:ROOMS.cafe,
   eq:[{id:1,n:'Two-Group Espresso Machine',kw:5.5,w:'Water 3/8", drain 1.5"',dim:[1000,600,550],t:'Pass'},
    {id:2,n:'2-Door Undercounter Fridge',kw:0.4,w:'None (condensate evaporated)',dim:[1800,700,850],t:'Cold storage'},
    {id:3,n:'Panini Contact Grill',kw:3,w:'None',dim:[600,500,250],t:'Cooking',duty:'light'},
@@ -617,7 +662,7 @@ const PRESETS={
    {id:0,n:'TABLE 5',t:'table4',z:'foh',x:490,y:310,w:84,h:84}],
   mep:[{k:'drain',x:232,y:88},{k:'drain',x:352,y:88},{k:'water',x:256,y:88},{k:'water',x:382,y:78},
    {k:'power',x:244,y:52},{k:'power',x:352,y:52},{k:'power',x:415,y:52},{k:'power',x:460,y:52},{k:'power',x:200,y:180}]},
- bar:{app:'horeca-sdt',v:1,label:'Bar',panel:15,diversity:1,cfm:0,room:ROOMS.bar,
+ bar:{app:'horeca-sdt',v:1,venue:'bar',label:'Bar',routes:[{name:'Mix a cocktail',stops:['#1','#8','#7','BAR TOP'],n:120},{name:'Pour a pint',stops:['#9','BAR TOP'],n:150},{name:'Restock glasses',stops:['#5','GLASS RACKS','#7'],n:20},{name:'Change a keg',stops:['#4','#9'],n:4}],panel:15,diversity:1,cfm:0,room:ROOMS.bar,
   eq:[{id:1,n:'3-Door Back-Bar Bottle Fridge',kw:0.6,w:'None (condensate evaporated)',dim:[2400,600,900],t:'Cold storage'},
    {id:2,n:'Back-Bar Display Shelving',kw:0,w:'None',dim:[1500,450,1800],t:'Neutral'},
    {id:3,n:'Modular Ice Machine',kw:1.5,w:'Water 3/8", drain 1"',dim:[600,700,1600],t:'Cold storage'},
@@ -633,11 +678,11 @@ const PRESETS={
    {id:7,n:'COCKTAIL STN',t:'prep',z:'neutral',x:178,y:160,w:108,h:36,lp:'top'},{id:8,n:'ICE WELL',t:'sink',z:'neutral',x:286,y:160,w:54,h:36,lp:'top2'},
    {id:9,n:'DRAFT',t:'backbar',z:'neutral',x:340,y:160,w:72,h:36,lp:'top'},
    {id:0,n:'BAR TOP',t:'bartop',z:'pass',x:106,y:196,w:306,h:27,lp:'in'},{id:0,n:'STOOLS',t:'stools',z:'foh',x:106,y:223,w:306,h:27},
-   {id:0,n:'TABLE 1',t:'table4',z:'foh',x:120,y:300,w:84,h:84},{id:0,n:'TABLE 2',t:'table4',z:'foh',x:250,y:300,w:84,h:84},
-   {id:0,n:'TABLE 3',t:'table2',z:'foh',x:390,y:300,w:42,h:84},{id:0,n:'GLASS RACKS',t:'shelf',z:'store',x:607,y:162,w:27,h:90}],
+   {id:0,n:'TABLE 1',t:'table4',z:'foh',x:120,y:320,w:84,h:84},{id:0,n:'TABLE 2',t:'table4',z:'foh',x:250,y:320,w:84,h:84},
+   {id:0,n:'TABLE 3',t:'table2',z:'foh',x:390,y:320,w:42,h:84},{id:0,n:'GLASS RACKS',t:'shelf',z:'store',x:607,y:162,w:27,h:90}],
   mep:[{k:'drain',x:142,y:182},{k:'drain',x:340,y:182},{k:'drain',x:350,y:90},{k:'water',x:130,y:170},{k:'water',x:366,y:90},
    {k:'power',x:178,y:52},{k:'power',x:358,y:52},{k:'power',x:480,y:52},{k:'power',x:112,y:188}]}};
-function applyPreset(k){const P=k==='restaurant'?PRE0:PRESETS[k];if(!P)return;ZSEL=null;loadProj(JSON.stringify(P));toast(P.label+' preset loaded. Earlier edits were replaced.')}
+function applyPreset(k){const P=k==='restaurant'?PRE0:PRESETS[k];if(!P)return;ZSEL=null;RSEL=0;loadProj(JSON.stringify(P));startQ();toast(P.label+' preset loaded. Earlier edits were replaced.')}
 $('#presetSel').onchange=e=>applyPreset(e.target.value);
 function zonePick(i){ZSEL=ZSEL===ZK[i]?null:ZK[i];drawZones();renderBlocks();drawEq()}
 let MEASON=false,MP=[];
@@ -646,14 +691,250 @@ function drawMeas(){let h=MP.map(q=>`<circle cx="${q.x}" cy="${q.y}" r="3"/>`).j
   h+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#F8FAFC" stroke-dasharray="4 3"/><text x="${(a.x+b.x)/2+6}" y="${(a.y+b.y)/2-6}" fill="#F59E0B">${d} mm</text>`;
   $('#measOut').textContent=`${d} mm (ΔX ${Math.round(dx)}, ΔY ${Math.round(dy)})`}
  $('#L-meas').innerHTML=h}
-$('#measBtn').onclick=()=>{MEASON=!MEASON;MP=[];$('#measBtn').setAttribute('aria-pressed',MEASON);$('#measBtn').classList.toggle('tab-on',MEASON);$('#cad').style.cursor=MEASON?'crosshair':'';$('#measOut').textContent=MEASON?'Click two points on the plan.':'';drawMeas()};
+$('#measBtn').onclick=()=>{if(REC)stopRec(false);MEASON=!MEASON;MP=[];$('#measBtn').setAttribute('aria-pressed',MEASON);$('#measBtn').classList.toggle('tab-on',MEASON);$('#cad').style.cursor=MEASON?'crosshair':'';$('#measOut').textContent=MEASON?'Click two points on the plan.':'';drawMeas()};
 $('#cad').addEventListener('pointerdown',e=>{if(!MEASON)return;e.stopPropagation();e.preventDefault();const p=svgPt(e),st=$('#snapSw').checked?6:1;if(MP.length>=2)MP=[];MP.push({x:Math.round(p.x/st)*st,y:Math.round(p.y/st)*st});drawMeas()},true);
 $('#themeBtn').onclick=()=>{const l=document.documentElement.classList.toggle('light');$('#themeBtn').setAttribute('aria-pressed',l)};
 
+/* Rotation, equipment library, undo/redo */
+let SELI=-1,dragSnap=null,keyT=0;
+const PAST=[],FUT=[];
+function detailG(b,c){const r=b.rot||0,q=r%180,L=Object.assign({},b,{w:q?b.h:b.w,h:q?b.w:b.h}),
+  tf=r===90?`translate(${b.w} 0) rotate(90)`:r===180?`translate(${b.w} ${b.h}) rotate(180)`:r===270?`translate(0 ${b.h}) rotate(270)`:'';
+ return `<g fill="none" stroke="${c}" stroke-opacity=".6" pointer-events="none"${tf?` transform="${tf}"`:''}>${detail(L)}</g>`}
+function rotateBlk(i){const b=BLK[i];if(!b)return;hist();
+ const cx=b.x+b.w/2,cy=b.y+b.h/2,B=BD(),st=$('#snapSw').checked?6:1;[b.w,b.h]=[b.h,b.w];b.rot=((b.rot||0)+90)%360;if(!b.rot)delete b.rot;
+ b.x=Math.min(B.x1-b.w,Math.max(B.x0,Math.round((cx-b.w/2)/st)*st));b.y=Math.min(B.y1-b.h,Math.max(B.y0,Math.round((cy-b.h/2)/st)*st));
+ renderBlocks();renderClear();const g=$('#L-equip').children[i];if(g)g.focus()}
+$('#L-equip').addEventListener('focusin',e=>{const g=e.target.closest('g[data-i]');if(g)SELI=+g.dataset.i});
+$('#rotBtn').onclick=()=>{if(!BLK[SELI])return toast('Click a block on the plan first, then rotate it.');rotateBlk(SELI)};
+function snapState(){return JSON.stringify({app:'horeca-sdt',v:1,venue:VENUE,routes:ROUTES,room:ROOM,eq:EQ,blocks:BLK,mep:MEPS,panel:PANEL,diversity:DIV,cfm:CFM})}
+function histUI(){$('#undoBtn').disabled=!PAST.length;$('#redoBtn').disabled=!FUT.length}
+function hist(s){PAST.push(s||snapState());if(PAST.length>60)PAST.shift();FUT.length=0;histUI()}
+function nudgeHist(){if(Date.now()-keyT>800)hist();keyT=Date.now()}
+function undo(){if(!PAST.length)return;FUT.push(snapState());loadProj(PAST.pop(),{hist:1});histUI();toast('Undone.')}
+function redo(){if(!FUT.length)return;PAST.push(snapState());loadProj(FUT.pop(),{hist:1});histUI();toast('Redone.')}
+$('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;
+document.addEventListener('keydown',e=>{if(!(e.ctrlKey||e.metaKey)||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;const k=e.key.toLowerCase();
+ if(k==='z'){e.shiftKey?redo():undo();e.preventDefault()}else if(k==='y'){redo();e.preventDefault()}});
+$('#cad').addEventListener('pointerdown',e=>{if(!MEASON&&e.target.closest('g[data-i],[data-hood],g[data-m]'))dragSnap=snapState()});
+window.addEventListener('pointerup',()=>{if(dragSnap){const s=dragSnap;dragSnap=null;if(snapState()!==s)hist(s)}});
+const LIB=[
+ ['Cooking','Twin-basket electric fryer','FRYER','hot','fryer',7,'None',[800,700,900],'medium',2500],
+ ['Cooking','Chargrill / water grill','GRILL','hot','grill',9,'Water 3/4", drain 2"',[1100,700,900],'heavy',6500],
+ ['Cooking','4-plate electric range','RANGE','hot','range',7,'None',[1200,700,900],'medium',3000],
+ ['Cooking','Induction wok station','WOK','hot','range',5,'Water 1/2", drain 1.5"',[700,700,900],'heavy',4500],
+ ['Cooking','6-tray combi oven','COMBI 6','hot','combi',10,'Water 3/4", drain 2"',[900,800,800],'light',11000],
+ ['Cooking','10-tray combi oven','COMBI 10','hot','combi',16,'Water 3/4", drain 2"',[900,800,1100],'light',15000],
+ ['Cooking','Panini contact grill','PANINI','hot','grill',3,'None',[600,500,250],'light',600],
+ ['Cold','2-door upright fridge','UPRIGHT FRIDGE','cold','fridge',0.5,'None (condensate evaporated)',[1400,800,2000],null,2800],
+ ['Cold','2-door undercounter fridge','UNDER FRIDGE','cold','fridge',0.4,'None (condensate evaporated)',[1400,700,850],null,2000],
+ ['Cold','Refrigerated prep counter','PREP COUNTER','cold','prep',0.3,'None (condensate evaporated)',[1600,700,900],null,2400],
+ ['Cold','Blast chiller, 5 trays','BLAST CHILL','cold','generic',1.5,'None',[800,800,900],null,4500],
+ ['Cold','Modular ice machine','ICE MACHINE','cold','ice',1.5,'Water 3/8", drain 1"',[600,700,1600],null,3500],
+ ['Cold','Refrigerated display case','DISPLAY','cold','display',1.2,'None (condensate evaporated)',[1500,700,1300],null,4000],
+ ['Cold','Back-bar bottle fridge','BOTTLE FRIDGE','cold','fridge',0.6,'None (condensate evaporated)',[1800,600,900],null,1800],
+ ['Warewashing','Hood-type dishwasher','DISHWASH','ware','ware',9,'Water 3/4", drain 2" + floor drain',[700,750,1500],null,6000],
+ ['Warewashing','Undercounter glasswasher','GLASSWASH','ware','ware',3,'Water 3/4", drain 1.5"',[600,600,820],null,2200],
+ ['Warewashing','Hand wash sink','HAND SINK','ware','sink',0,'Water 1/2", drain 1.5"',[450,450,900],null,350],
+ ['Warewashing','Double-bowl sink','SINK','ware','sink',0,'Water 3/4", drain 2"',[1200,700,900],null,900],
+ ['Service','Two-group espresso machine','ESPRESSO','pass','espresso',5.5,'Water 3/8", drain 1.5"',[1000,600,550],null,9000],
+ ['Service','Heated pass / hot cupboard','HOT PASS','pass','pass',2,'None',[1500,700,900],null,2500],
+ ['Service','POS service counter','POS','pass','counter',0.3,'None',[1200,700,1050],null,1500],
+ ['Neutral & storage','Stainless neutral table','NEUTRAL','neutral','table',0,'None',[1200,700,900],null,600],
+ ['Neutral & storage','Dry store shelving','SHELVING','store','shelf',0,'None',[1200,450,1800],null,400]];
+$('#eqLib').innerHTML='<option value="">Custom item</option>'+[...new Set(LIB.map(l=>l[0]))].map(g=>`<optgroup label="${g}">`+LIB.map((l,i)=>l[0]===g?`<option value="${i}">${l[1]}</option>`:'').join('')+'</optgroup>').join('');
+$('#eqLib').onchange=e=>{const l=LIB[+e.target.value];if(!l)return;const set=(id,v)=>{$('#'+id).value=v};
+ set('eqN',l[1]);set('eqL',l[2]);set('eqZ',l[3]);set('eqT',l[4]);set('eqKW',l[5]);set('eqP',l[6]);set('eqW',l[7][0]);set('eqDp',l[7][1]);set('eqH',l[7][2]);if(l[8])set('eqD',l[8]);
+ if($('#eqCost'))set('eqCost',l[9]);$('#eqDutyBox').classList.toggle('hidden',l[3]!=='hot')};
+const FURN={table2:['TABLE','table2','foh',42,84],table4:['TABLE','table4','foh',84,84],stools:['STOOLS','stools','foh',144,27],bench:['BENCH','bench','foh',120,27],bartop:['BAR TOP','bartop','pass',180,27,'in']};
+$('#furnSel').onchange=e=>{const f=FURN[e.target.value];e.target.value='';if(!f)return;hist();
+ let k=1;while(BLK.some(b=>b.n===f[0]+' '+k))k++;
+ const b={id:0,n:f[0]+' '+k,t:f[1],z:f[2],x:46,y:46,w:f[3],h:f[4]};if(f[5])b.lp=f[5];BLK.push(b);spot(b);renderBlocks();renderClear();
+ const g=$('#L-equip').lastElementChild;if(g)g.focus();toast(b.n+' added. Drag it into place.')};
+
+/* Venue-aware Empathize and Define content */
+let VENUE='restaurant';
+const VENUES={
+ restaurant:{label:'Restaurant kitchen',zones:['Cold Prep','Thermal Line','Service Pass','Warewashing'],zk:['cold','hot','pass','ware'],R:JSON.parse(JSON.stringify(R)),
+  xl:'X: keep raw prep away from dish return',flow:'Workflow: Cold Prep → Thermal Cooking Line → Service Pass → Warewashing.',
+  j:[['flame','Line cook journey','Fridge to grill to pass is the critical path. Crossing the dish return slows tickets and raises burn and slip risk.','≤ 650 mm','Peak covers/hr','80'],
+     ['utensils','Kitchen porter journey','Dirty plates arrive at the pass and must reach the dish machine without crossing the hot line.','≤ 600 mm','Racks/hr','40']],
+  f:['Dish return crosses the hot line','Walk-in fridge is far from prep','Pass is too narrow for two runners'],
+  drain:['Slope 1:50 minimum to the stack','Floor drains under combi oven and warewash','Grease interceptor sized for the fixture count'],
+  hvac:['1000 CFM exhaust',['Make-up air to balance the exhaust','Hood overhangs the cooking line on all open sides','Check duct route and roof penetration']]},
+ cafe:{label:'Café',zones:['Prep & Cold','Order & Espresso','Guest Seating','Dishwash'],zk:['cold','pass','foh','ware'],
+  R:{'0-1':['A','Milk and display food within one step of the espresso bar.'],'0-2':['O','Guests are served across the counter, not from prep.'],'0-3':['X','Keep dirty cups and the dishwasher away from open food prep.'],
+     '1-2':['E','Queue and pickup need a clear 1500 mm zone so they do not block seating.'],'1-3':['I','Cups return to the dishwasher without crossing the barista aisle.'],'2-3':['E','Bussing route of 1200 mm from tables to the dishwasher.']},
+  xl:'X: keep dirty cups away from food prep',flow:'Workflow: Prep & Cold → Order & Espresso → Guest Seating → Dishwash.',
+  j:[['coffee','Barista journey','Grinder, espresso machine and milk fridge sit in a triangle. Every extra step repeats hundreds of times per shift.','≤ 600 mm','Peak drinks/hr','120'],
+     ['receipt','Counter server journey','Takes the order, plates food from the display and calls the pickup. The queue and the pickup point must not cross.','≤ 600 mm','Peak orders/hr','90']],
+  f:['Queue blocks the pickup point','Milk fridge is not under the espresso machine','Dirty cups cross the barista aisle'],
+  drain:['Drain point under the espresso machine','Floor drain at the dishwasher','Hand sink in every food prep area'],
+  hvac:['1200 CFM exhaust',['Small hood over the oven and panini grill, or a ventless unit if allowed','Make-up air for the hood','Comfort cooling for the guest area']]},
+ bar:{label:'Bar',zones:['Back Bar','Underbar Stations','Guest Seating','Glasswash'],zk:['cold','neutral','foh','ware'],
+  R:{'0-1':['A','Back bar within one turn of the underbar. Keep the bartender aisle at 900–1000 mm.'],'0-2':['I','Guests see the back bar display, but there is no direct staff route.'],'0-3':['O','Glasses and bottles meet only at the rack.'],
+     '1-2':['A','Drinks pass straight across the bar top. Pouring reach no more than 600 mm.'],'1-3':['E','Clean glasses go from the washer back to the stations in one step.'],'2-3':['E','Empties return from the bar top to the glasswasher directly.']},
+  xl:'',flow:'Workflow: Back Bar → Underbar Stations → Guest Seating → Glasswash.',
+  j:[['wine','Bartender journey','Back bar, ice well and bar top within one turn. Every trip to the keg cooler or glass rack is lost selling time.','≤ 600 mm','Peak drinks/hr','150'],
+     ['package','Barback journey','Restocks ice, glasses and kegs during service without blocking the bartender aisle.','≤ 650 mm','Restock runs/hr','8']],
+  f:['Glasswasher is far from the glass racks','Ice machine sits outside the bar run','Stools crowd the lounge walkway'],
+  drain:['Floor drains under the glasswasher and ice well','Indirect waste with air gap for the ice machine','Drip tray drain at the draft station'],
+  hvac:['No cooking exhaust',['General ventilation for the bar and lounge','Heat rejection from the keg cooler and ice machine','Comfort cooling for guests']]}};
+function setVenue(k){VENUE=VENUES[k]?k:'restaurant';const V=VENUES[VENUE];
+ Z.forEach((z,i)=>{z.n=V.zones[i];z.c=CZ[V.zk[i]]});ZK.splice(0,ZK.length,...V.zk);
+ Object.keys(R).forEach(q=>delete R[q]);Object.assign(R,JSON.parse(JSON.stringify(V.R)));
+ sel=null;$('#ruleBox').textContent='Select a cell to see the clearance rule.';
+ $('#xText').textContent=V.xl;$('#xLink').style.display=R['0-3'][0]==='X'?'':'none';$('#flowTxt').textContent=V.flow;
+ document.querySelectorAll('.venueTag').forEach(t=>t.textContent=V.label);$('#presetSel').value=VENUE;
+ $('#journeys').innerHTML=V.j.map(j=>`<div class="card p-5"><h3 class="font-semibold flex items-center gap-2"><i data-lucide="${j[0]}" class="w-4 h-4 text-amber"></i>${j[1]}</h3><p class="text-sm text-slate-400 mt-2">${j[2]}</p><dl class="grid grid-cols-2 gap-2 mt-3 font-mono text-xs"><div class="bg-slate-900 p-2 rounded"><dt class="text-slate-500">Reach limit</dt><dd>${j[3]}</dd></div><div class="bg-slate-900 p-2 rounded"><dt class="text-slate-500">${j[4]}</dt><dd>${j[5]}</dd></div></dl></div>`).join('')
+  +`<div class="card p-5"><h3 class="font-semibold flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4 text-amber"></i>Friction points logged</h3><ul class="text-sm text-slate-400 mt-2 space-y-1 list-disc pl-5">${V.f.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
+ MEP.Drainage.n=V.drain;MEP.HVAC.v=V.hvac[0];MEP.HVAC.n=V.hvac[1];
+ if(!$('#drawer').classList.contains('hidden'))mepTab('Water');
+ drawZones();buildMatrix();if(window.lucide)lucide.createIcons()}
+
+/* Staff walking routes */
+const KROUTES=[{name:'Plate a grilled main',stops:['#3','#7','#1','SERVICE PASS'],n:120},{name:'Fry a side order',stops:['#3','#5','SERVICE PASS'],n:80},{name:'Return dirty plates',stops:['SERVICE PASS','#4'],n:60},{name:'Restock from the walk-in',stops:['WALK-IN','#7','#3'],n:10}];
+let ROUTES=[],RSEL=0,REC=null,WALK=0,CLR_N=0,MEP_N=0,LOADP=0;
+const bkey=b=>b.id?'#'+b.id:b.n,findB=k=>BLK.find(b=>bkey(b)===k);
+function routePts(stops){let prev=null;const pts=[];stops.forEach(k=>{const b=findB(k);if(!b)return;
+ const p=prev?{x:Math.min(b.x+b.w,Math.max(b.x,prev.x)),y:Math.min(b.y+b.h,Math.max(b.y,prev.y))}:{x:b.x+b.w/2,y:b.y+b.h/2};pts.push(p);prev=p});return pts}
+function routeLen(stops){const P=routePts(stops);let d=0;for(let i=1;i<P.length;i++)d+=Math.abs(P[i].x-P[i-1].x)+Math.abs(P[i].y-P[i-1].y);return d*U/1000}
+function drawRoute(stops,col){const P=routePts(stops);if(!P.length)return '';let d=`M${P[0].x} ${P[0].y}`;for(let i=1;i<P.length;i++)d+=`H${P[i].x}V${P[i].y}`;
+ return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.5" stroke-dasharray="7 4" stroke-linejoin="round"/>`+P.map((p,i)=>`<circle cx="${p.x}" cy="${p.y}" r="8" fill="${col}"/><text x="${p.x}" y="${p.y+3.5}" text-anchor="middle" fill="#020617" font-weight="700">${i+1}</text>`).join('')}
+function renderRoutes(){if(!$('#routeRows'))return;WALK=0;
+ $('#routeRows').innerHTML=ROUTES.length?ROUTES.map((r,i)=>{const m=routeLen(r.stops),miss=r.stops.filter(k=>!findB(k)).length;WALK+=m*r.n;
+  return `<tr class="border-t border-slate-700 cursor-pointer ${i===RSEL?'bg-slate-900':''}" onclick="RSEL=${i};renderRoutes()"><td class="p-1.5 font-sans ${i===RSEL?'text-amber':''}">${r.name}${miss?` <span class="text-red-400">(${miss} unit${miss>1?'s':''} missing)</span>`:''}<div class="text-[10px] text-slate-500">${r.stops.map(k=>(findB(k)||{n:k}).n).join(' → ')}</div></td><td class="p-1.5 text-right">${m.toFixed(1)}</td><td class="p-1.5 text-right"><input type="number" min="0" max="10000" value="${r.n}" aria-label="Orders per shift for ${r.name}" onclick="event.stopPropagation()" onchange="ROUTES[${i}].n=Math.max(0,Math.min(10000,+this.value||0));renderRoutes()" class="w-16 bg-slate-800 border border-slate-600 rounded px-1 text-right"></td><td class="p-1.5 text-right">${Math.round(m*r.n)}</td><td class="p-1.5 text-right"><button onclick="event.stopPropagation();hist();ROUTES.splice(${i},1);RSEL=0;renderRoutes()" aria-label="Delete ${r.name}" class="text-slate-500 hover:text-red-400">✕</button></td></tr>`}).join(''):'<tr><td colspan="5" class="p-2 text-slate-500 font-sans">No routes yet. Name one and record it on the plan.</td></tr>';
+ $('#routeTotal').textContent=ROUTES.length?`Total ${(WALK/1000).toFixed(2)} km per shift, about ${Math.round(WALK/0.75).toLocaleString()} steps`:'';
+ $('#L-path').innerHTML=REC?drawRoute(REC.stops,'#22D3EE'):(ROUTES[RSEL]?drawRoute(ROUTES[RSEL].stops,'#F472B6'):'')}
+function stopRec(save){if(save&&REC){if(REC.stops.length<2)return toast('Click at least two units on the plan first.');hist();ROUTES.push({name:REC.name,stops:REC.stops,n:50});RSEL=ROUTES.length-1;$('#routeName').value='';toast(`Route "${REC.name}" saved.`)}
+ REC=null;$('#recBtn').textContent='Record on plan';$('#recBtn').classList.remove('tab-on');$('#recCancel').classList.add('hidden');$('#recHint').classList.add('hidden');$('#cad').style.cursor='';renderRoutes()}
+$('#recBtn').onclick=()=>{if(REC)return stopRec(true);if(MEASON)$('#measBtn').click();
+ REC={name:clean($('#routeName').value.trim(),1).slice(0,40)||'Route '+(ROUTES.length+1),stops:[]};$('#recBtn').textContent='Save route';$('#recBtn').classList.add('tab-on');$('#recCancel').classList.remove('hidden');
+ $('#recHint').classList.remove('hidden');$('#recHint').textContent='Click the units on the plan in the order staff visit them, then press Save route.';$('#cad').style.cursor='crosshair';
+ $('#cad').scrollIntoView({behavior:'smooth',block:'center'});renderRoutes()};
+$('#recCancel').onclick=()=>stopRec(false);
+$('#cad').addEventListener('pointerdown',e=>{if(!REC)return;e.stopPropagation();e.preventDefault();const g=e.target.closest('g[data-i]');if(!g)return;const b=BLK[+g.dataset.i];
+ REC.stops.push(bkey(b));$('#recHint').textContent=`${REC.stops.length} stop${REC.stops.length>1?'s':''}: ${REC.stops.map(k=>(findB(k)||{n:k}).n).join(' → ')}. Press Save route when done.`;renderRoutes()},true);
+
+/* Compare layouts */
+const SLOTS={A:null,B:null};
+const CMP=[['Room','room',0],['Guest seats','seats',1],['Aisle issues','aisle',-1],['MEP issues','mep',-1],['Access issues','acc',-1],['Panel load %','load',-1],['Hood CFM short','hood',-1],['Walking m / shift','walk',-1],['Equipment items','units',0],['Equipment budget','cost',-1]];
+function metrics(){return{room:`${ROOM.name} ${ROOM.w/1000}×${ROOM.d/1000} m`,seats:seats(),aisle:CLR_N,mep:MEP_N,load:Math.round(LOADP),hood:Math.max(0,REQ-CFM),walk:Math.round(WALK),units:EQ.length,acc:ACC.n,cost:Math.round(eqCost())}}
+function storeSlot(k){SLOTS[k]={m:metrics(),s:snapState(),t:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})};renderCmp();toast(`Current layout stored as ${k}.`)}
+function loadSlot(k){if(SLOTS[k]){loadProj(SLOTS[k].s);toast(`Layout ${k} opened. Undo returns to the previous one.`)}}
+function renderCmp(){const A=SLOTS.A,B=SLOTS.B;$('#openA').disabled=!A;$('#openB').disabled=!B;
+ if(!A&&!B){$('#cmpTable').innerHTML='<tr><td class="p-2 text-slate-500 font-sans">Store the current plan as A, change it, then store it as B.</td></tr>';return}
+ const cell=(S,O,key,dir)=>{if(!S)return '<td class="p-1.5 text-right text-slate-600">—</td>';const v=S.m[key],o=O&&O.m[key],win=dir&&O&&typeof v==='number'&&v!==o&&(dir>0?v>o:v<o);
+  return `<td class="p-1.5 text-right ${win?'text-green-400 font-bold':''}">${typeof v==='number'?(key==='cost'?money(v):v.toLocaleString()):v}</td>`};
+ $('#cmpTable').innerHTML=`<tr class="text-slate-400"><th class="text-left p-1.5 font-medium font-sans"></th><th class="text-right p-1.5 font-medium">A${A?' · '+A.t:''}</th><th class="text-right p-1.5 font-medium">B${B?' · '+B.t:''}</th></tr>`+
+  CMP.map(([l,k,dir])=>`<tr class="border-t border-slate-700"><td class="p-1.5 font-sans text-slate-300">${l}</td>${cell(A,B,k,dir)}${cell(B,A,k,dir)}</tr>`).join('')}
+
+/* Equipment cost */
+let CUR='$',INST=15;
+const money=v=>CUR+Math.round(v).toLocaleString();
+const eqCost=()=>EQ.reduce((a,e)=>a+(e.p||0),0);
+function renderBudget(){if(!$('#budget'))return;const c=eqCost();$('#budget').textContent=`Equipment ${money(c)} + ${INST}% allowance = ${money(c*(1+INST/100))}`}
+$('#curIn').oninput=e=>{CUR=clean(e.target.value,1).slice(0,4);document.querySelectorAll('.curSym').forEach(x=>x.textContent=CUR);drawEq();sched();renderCmp()};
+$('#instIn').oninput=e=>{INST=Math.max(0,Math.min(200,+e.target.value||0));renderBudget()};
+const P0={restaurant:{1:6500,2:15000,3:3200,4:6000,5:2500,6:3000,7:2400,8:600},cafe:{1:9000,2:2000,3:600,4:3500,5:4000,6:2600,7:350,8:500,9:500,10:1500,11:450},bar:{1:2200,2:900,3:3500,4:4200,5:2200,6:900,7:1800,8:700,9:2500}};
+EQ.forEach(e=>{e.p=P0.restaurant[e.id]||0});['cafe','bar'].forEach(k=>PRESETS[k].eq.forEach(e=>{e.p=P0[k][e.id]||0}));
+
+/* Access and exit checks: grid search for a 900 mm route from the door */
+let ACC={n:0,ok:true},accT=0;
+function accSoon(){clearTimeout(accT);accT=setTimeout(accessCheck,drag?300:60)}
+function accessCheck(){
+ const B=BD(),c=6,r=26,D=ROOM.door,nx=Math.max(1,Math.floor((B.x1-B.x0)/c)),ny=Math.max(1,Math.floor((B.y1-B.y0)/c)),cx=i=>B.x0+c*(i+.5),cy=j=>B.y0+c*(j+.5);
+ const hit=(x,y,rr,list)=>x-rr<B.x0||x+rr>B.x1||y-rr<B.y0||y+rr>B.y1||list.some(b=>x+rr>b.x&&x-rr<b.x+b.w&&y+rr>b.y&&y-rr<b.y+b.h);
+ const free=new Uint8Array(nx*ny),dist=new Int32Array(nx*ny).fill(-1),q=[];
+ for(let j=0;j<ny;j++)for(let i=0;i<nx;i++)free[j*nx+i]=hit(cx(i),cy(j),r,BLK)?0:1;
+ for(let i=0;i<nx;i++){const x=cx(i);if(x<D.x+6||x>D.x+D.len-6)continue;for(let j=ny-1;j>=0&&cy(j)>=B.y1-r-2*c;j--){const k=j*nx+i;if(free[k]&&dist[k]<0){dist[k]=0;q.push(k)}}}
+ for(let h=0;h<q.length;h++){const k=q[h],i=k%nx,j=(k-i)/nx;for(const[a,b]of[[i+1,j],[i-1,j],[i,j+1],[i,j-1]]){if(a<0||b<0||a>=nx||b>=ny)continue;const n=b*nx+a;if(free[n]&&dist[n]<0){dist[n]=dist[k]+1;q.push(n)}}}
+ const out=[],svg=[],doorMM=Math.round(D.len*U);
+ out.push([doorMM>=850,`Door clear width ${doorMM} mm (min 850)`]);
+ if(!q.length)out.push([false,'Door is blocked: no 900 mm clear space inside it']);
+ const miss=BLK.filter(b=>{for(let j=Math.max(0,Math.floor((b.y-B.y0-r-c)/c));j<Math.min(ny,Math.ceil((b.y+b.h-B.y0+r+c)/c));j++)for(let i=Math.max(0,Math.floor((b.x-B.x0-r-c)/c));i<Math.min(nx,Math.ceil((b.x+b.w-B.x0+r+c)/c));i++){
+   if(dist[j*nx+i]<0)continue;const x=cx(i),y=cy(j),dx=Math.max(b.x-x,0,x-b.x-b.w),dy=Math.max(b.y-y,0,y-b.y-b.h);if(Math.hypot(dx,dy)<=r+c+12)return false}return true});
+ out.push([!miss.length,miss.length?`No 900 mm route from the door to ${miss.map(b=>b.n).join(', ')}`:'900 mm route from the door to every unit']);
+ miss.forEach(b=>svg.push(`<rect x="${b.x-4}" y="${b.y-4}" width="${b.w+8}" height="${b.h+8}" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="4 3"/>`));
+ const n=seats(),foh=BLK.filter(b=>b.z==='foh');
+ if(n){let spot=null;for(let k=0;k<q.length&&!spot;k++){const i=q[k]%nx,j=(q[k]-i)/nx,x=cx(i),y=cy(j);if(!hit(x,y,45,BLK)&&foh.some(b=>Math.hypot(Math.max(b.x-x,0,x-b.x-b.w),Math.max(b.y-y,0,y-b.y-b.h))<=180))spot={x,y}}
+  out.push([!!spot,spot?'1500 mm wheelchair turning space in the guest area':'No 1500 mm wheelchair turning space near the guest seats']);
+  if(spot)svg.push(`<circle cx="${spot.x}" cy="${spot.y}" r="45" fill="#22C55E14" stroke="#22C55E" stroke-dasharray="5 4"/><text x="${spot.x}" y="${spot.y+4}" text-anchor="middle" fill="#22C55E">Ø1500</text>`);
+  const per=ROOM.w*ROOM.d/1e6/n;out.push([per>=1.4,`${per.toFixed(1)} m² of room per guest seat (guide: at least 1.4 m² in the dining area alone)`])}
+ let far=-1,fk=-1;for(const k of q)if(dist[k]>far){far=dist[k];fk=k}
+ if(fk>=0){const m=far*c*U/1000,i=fk%nx,j=(fk-i)/nx;out.push([m<=25,`Furthest point to the door ${m.toFixed(1)} m (single-exit guide 25 m)`]);
+  svg.push(`<path d="M${cx(i)-6} ${cy(j)-6}l12 12m0-12l-12 12" stroke="#F59E0B" stroke-width="2"/><text x="${cx(i)+9}" y="${cy(j)-8}" fill="#F59E0B">${m.toFixed(1)} m to exit</text>`)}
+ svg.push(`<text x="${D.x+D.len/2}" y="${B.y1-8}" text-anchor="middle" fill="#22C55E" font-weight="700">EXIT</text>`);
+ $('#L-acc').innerHTML=svg.join('');
+ ACC={n:out.filter(o=>!o[0]).length};ACC.ok=!ACC.n;
+ $('#accList').innerHTML=out.map(([ok,t])=>`<div class="${ok?'text-green-400':'text-red-400'}">${ok?'✓':'✗'} ${t}</div>`).join('');
+ setAuto(4,ACC.ok)}
+
+/* Presentation mode */
+let DK=0,SL=[];
+function deckSlides(){const V=VENUES[VENUE],kw=EQ.reduce((a,e)=>a+e.kw,0);
+ const chip=(ok,t,neutral)=>`<span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm ${neutral?'border-slate-600 text-slate-300':ok?'border-green-500/50 text-green-300':'border-red-500/50 text-red-300'}">${neutral?'':ok?'✓ ':'✗ '}${t}</span>`;
+ const H=(n,t,sub)=>`<p class="font-mono text-bp text-sm">${n}</p><h2 class="text-3xl md:text-5xl font-bold mt-2 leading-tight">${t}</h2>${sub?`<p class="text-slate-400 mt-3 max-w-3xl text-lg">${sub}</p>`:''}`;
+ const clone=el=>{const c=el.cloneNode(true);c.removeAttribute('id');c.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));c.querySelectorAll('[tabindex]').forEach(n=>n.removeAttribute('tabindex'));return c};
+ const plan=clone($('#cad'));plan.setAttribute('class','w-full rounded-lg');plan.style.cssText='max-height:58vh;background:#0F172A';
+ const bub=clone(document.querySelector('#define svg'));bub.setAttribute('class','w-full');bub.style.maxWidth='560px';
+ const rules=Object.entries(R).filter(([,v])=>v[0]==='A'||v[0]==='X').map(([k,v])=>{const[a,b]=k.split('-').map(Number);return `<li class="flex gap-3"><span class="font-mono font-bold ${v[0]==='X'?'text-amber':'text-bp'}">${v[0]}</span><span><b>${Z[a].n} ↔ ${Z[b].n}.</b> <span class="text-slate-400">${v[1]}</span></span></li>`}).join('');
+ return [
+  `<div class="min-h-full flex flex-col justify-center">${H('DWG-000 · '+V.label.toUpperCase(),'Commercial Spatial Design Thinking','Bridging operational empathy with precision 2D CAD drafting and MEP load engineering.')}<p class="mt-10 font-mono text-slate-400">${ROOM.name} · ${ROOM.w} × ${ROOM.d} mm · ${seats()} guest seats · ${new Date().toLocaleDateString()}</p><p class="mt-2 text-sm text-slate-500">Flessas et al. (2015) · Bindu et al. (2022)</p></div>`,
+  H('01 · Empathize','How staff actually move',`Observed before any line is drawn, in the ${V.label.toLowerCase()}.`)+`<div class="grid md:grid-cols-2 gap-6 mt-8">${V.j.map(j=>`<div class="card p-6"><h3 class="text-xl font-semibold">${j[1]}</h3><p class="text-slate-400 mt-2">${j[2]}</p><p class="font-mono text-sm mt-4 text-amber">Reach ${j[3]} · ${j[4]} ${j[5]}</p></div>`).join('')}</div><h3 class="text-lg font-semibold mt-8">Friction points</h3><ul class="list-disc pl-6 mt-2 text-slate-300 space-y-1">${V.f.map(x=>`<li>${x}</li>`).join('')}</ul>`,
+  H('02 · Define','Zones and adjacency',V.flow)+`<div class="grid lg:grid-cols-2 gap-8 mt-6 items-start"><div>${bub.outerHTML}</div><ul class="space-y-3">${rules}</ul></div>`,
+  H('03 · Ideate','Equipment selection',`${EQ.length} items · ${kw.toFixed(1)} kW connected · ${money(eqCost())} equipment budget`)+`<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-8">${EQ.map(e=>`<div class="card p-4"><p class="font-semibold">${e.n}</p><p class="font-mono text-xs text-slate-400 mt-1">${e.d} mm · ${e.kw} kW · ${money(e.p||0)}</p></div>`).join('')}</div>`,
+  H('04 · Prototype','Plan and MEP integration')+`<div class="mt-6">${plan.outerHTML}</div><div class="flex flex-wrap gap-2 mt-4">${chip(!CLR_N,CLR_N?CLR_N+' aisle issue(s)':'Aisles ≥ 900 mm')}${chip(!MEP_N,MEP_N?MEP_N+' MEP issue(s)':'MEP points in reach')}${chip(LOADP<=100,'Panel '+Math.round(LOADP)+'%')}${chip(REQ<=CFM,REQ?CFM+' / '+REQ+' CFM':'No hood needed')}${chip(ACC.ok,ACC.ok?'Access and exits OK':ACC.n+' access issue(s)')}${chip(1,(WALK/1000).toFixed(2)+' km walked per shift',1)}${chip(1,seats()+' guest seats',1)}</div>`,
+  H('05 · Test & Deliver','Validation and site release',`${Math.round(done.size/CK.length*100)}% of checks passed.`)+`<div class="flex flex-col gap-3 mt-8 max-w-3xl">${CK.map((c,i)=>chip(done.has(i),c)).join('')}</div><p class="mt-8 text-slate-400">${done.size===CK.length?'Ready to release the construction package.':'Resolve the open checks before releasing drawings to contractors.'}</p>`]}
+function deckGo(d){DK=Math.max(0,Math.min(SL.length-1,DK+d));$('#deckBody').innerHTML=SL[DK];$('#deckBody').scrollTop=0;
+ $('#deckNum').textContent=`${DK+1} / ${SL.length}`;$('#deckNext').textContent=DK===SL.length-1?'Finish':'Next →';
+ $('#deckDots').innerHTML=SL.map((_,i)=>`<button aria-label="Slide ${i+1}" onclick="DK=${i};deckGo(0)" class="w-2.5 h-2.5 rounded-full ${i===DK?'bg-bp':'bg-slate-600'}"></button>`).join('');
+ if(d>0&&DK===SL.length-1&&$('#deckNext').dataset.end==='1')closeDeck();$('#deckNext').dataset.end=DK===SL.length-1?'1':''}
+function openDeck(){accessCheck();SL=deckSlides();DK=0;$('#deckTitle').textContent=`${VENUES[VENUE].label} · ${ROOM.name}`;$('#deck').classList.remove('hidden');deckGo(0);$('#deckNext').focus();
+ try{const r=$('#deck').requestFullscreen&&$('#deck').requestFullscreen();if(r&&r.catch)r.catch(()=>{})}catch(e){}}
+function closeDeck(){$('#deck').classList.add('hidden');try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}}
+$('#presentBtn').onclick=openDeck;
+document.addEventListener('keydown',e=>{if($('#deck').classList.contains('hidden'))return;
+ if(['ArrowRight','PageDown',' '].includes(e.key)){deckGo(1);e.preventDefault()}else if(['ArrowLeft','PageUp'].includes(e.key)){deckGo(-1);e.preventDefault()}else if(e.key==='Escape')closeDeck()});
+
+/* Review quiz and flashcards */
+let QS=[],QI=0,QSCORE=0,QMODE='quiz',QANS=null,QFLIP=false;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function buildQs(){const V=VENUES[VENUE],q=[
+ ['In Systematic Layout Planning, what does an A rating between two zones mean?','Absolutely necessary to be close',['Avoid placing them together','Average importance','Acceptable either way'],'A is the strongest closeness rating. The scale runs A, E, I, O, U down to X, which means keep apart.'],
+ ['Which SLP rating marks two zones that should be kept apart?','X',['U','O','I'],'X means undesirable. U only means the relationship is unimportant.'],
+ ['What minimum work corridor does this site check between different zones?','900 mm',['600 mm','750 mm','1500 mm'],'900 mm for one person, 1200 mm where two people pass or trolleys move.'],
+ ['What turning space does a wheelchair user need?','A 1500 mm diameter circle',['A 900 mm circle','A 1200 mm square','A 2000 mm circle'],'1500 mm is the common guide for a full turn. Check your local accessibility code.'],
+ ['How does this site estimate the exhaust hood airflow?','CFM per linear foot of hood, by cooking duty',['kW of the cooking line','Room volume','Number of guest seats'],'Light duty about 200, medium 300, heavy 400 CFM per foot. The hottest appliance under the hood sets the rate.'],
+ ['Why place a neutral table between cold prep and the cooking line?','It buffers heat and grease away from cold equipment',['It increases the electrical load','Drains must sit next to it','The hood needs it to work'],'A neutral unit separates zones that should not touch while keeping the run continuous.'],
+ ['What does an electrical diversity factor do?','Reduces connected load to the expected demand',['Adds a safety margin to the panel','Converts kW into amps','Sizes the exhaust hood'],'Not every appliance runs at full power at once, so demand is lower than the connected total.'],
+ ['Which design thinking phase turns observations into zone adjacency rules?','Define',['Empathize','Ideate','Test & Deliver'],'Empathize gathers how staff move; Define turns that into the SLP matrix and zoning.'],
+ ['How close must drain, water and power points be to the equipment that needs them on this plan?','Within 900 mm',['Within 300 mm','Within 2 m','Anywhere in the room'],'The MEP check flags any unit with no matching point within 900 mm of its edge.'],
+ ['What is the order of the five phases?','Empathize, Define, Ideate, Prototype, Test & Deliver',['Define, Empathize, Prototype, Ideate, Deliver','Ideate, Empathize, Define, Prototype, Deliver','Prototype, Define, Ideate, Empathize, Deliver'],'Observation comes first, and validation and release come last.']];
+ const A=Object.entries(R).filter(([,v])=>v[0]==='A'),notA=Object.entries(R).filter(([,v])=>v[0]!=='A'),nm=k=>{const[a,b]=k.split('-').map(Number);return Z[a].n+' and '+Z[b].n};
+ if(A.length&&notA.length>=3){const c=A[Math.floor(Math.random()*A.length)];q.push([`In the ${V.label.toLowerCase()} SLP matrix, which pair of zones is rated A?`,nm(c[0]),shuffle(notA).slice(0,3).map(x=>nm(x[0])),c[1][1]])}
+ const rs=ROUTES.filter(r=>r.stops.every(k=>findB(k)));if(rs.length>=2){const L=rs.map(r=>[r.name,routeLen(r.stops)]).sort((a,b)=>b[1]-a[1]);
+  if(L[0][1]>L[1][1])q.push(['On the plan you have open, which task has the longest walk per order?',L[0][0],L.slice(1,4).map(x=>x[0]),`${L[0][0]} takes about ${L[0][1].toFixed(1)} m per order. Moving its units closer would cut the most walking.`])}
+ return shuffle(q).map(([t,a,w,e])=>({t,a,o:shuffle([a,...w]),e}))}
+function renderQ(){const b=$('#qBody');
+ if(QMODE==='cards'){const q=QS[QI];$('#qProg').textContent=`Card ${QI+1} of ${QS.length}`;
+  b.innerHTML=`<button id="qCard" class="w-full min-h-[11rem] text-left rounded-lg border border-slate-600 bg-slate-900 p-6 hover:border-bp" aria-label="Flip card">${QFLIP?`<p class="text-xs font-mono text-bp mb-2">Answer</p><p class="text-lg font-semibold">${q.a}</p><p class="text-sm text-slate-400 mt-3">${q.e}</p>`:`<p class="text-xs font-mono text-slate-500 mb-2">Question · click to flip</p><p class="text-lg">${q.t}</p>`}</button>
+   <div class="flex justify-between mt-4"><button onclick="QI=(QI-1+QS.length)%QS.length;QFLIP=false;renderQ()" class="border border-slate-600 hover:border-bp rounded px-3 py-1.5 text-sm">← Previous</button><button onclick="QI=(QI+1)%QS.length;QFLIP=false;renderQ()" class="border border-slate-600 hover:border-bp rounded px-3 py-1.5 text-sm">Next →</button></div>`;
+  $('#qCard').onclick=()=>{QFLIP=!QFLIP;renderQ()};return}
+ if(QI>=QS.length){$('#qProg').textContent='';b.innerHTML=`<p class="text-2xl font-semibold">${QSCORE} / ${QS.length} correct</p><p class="text-slate-400 mt-2">${QSCORE===QS.length?'Every answer right.':'Switch to flashcards to revise the ones you missed.'}</p><button onclick="startQ()" class="mt-4 bg-bp text-white rounded px-4 py-2 text-sm">Try again</button>`;return}
+ const q=QS[QI];$('#qProg').textContent=`Question ${QI+1} of ${QS.length} · score ${QSCORE}`;
+ b.innerHTML=`<p class="text-lg mb-4">${q.t}</p><div class="grid gap-2">${q.o.map((o,i)=>{const st=QANS===null?'border-slate-600 hover:border-bp':o===q.a?'border-green-500 text-green-300':i===QANS?'border-red-500 text-red-300':'border-slate-700 text-slate-500';
+  return `<button ${QANS!==null?'disabled':''} onclick="answerQ(${i})" class="text-left border rounded px-4 py-2.5 ${st}" style="opacity:1">${o}</button>`}).join('')}</div>
+  ${QANS===null?'':`<div class="mt-4 rounded bg-slate-900 p-4 text-sm"><p class="font-semibold ${q.o[QANS]===q.a?'text-green-400':'text-red-400'}">${q.o[QANS]===q.a?'Correct.':'Not quite. The answer is: '+q.a}</p><p class="text-slate-400 mt-1">${q.e}</p></div><button onclick="QI++;QANS=null;renderQ()" class="mt-4 bg-bp text-white rounded px-4 py-2 text-sm">${QI===QS.length-1?'See score':'Next question'}</button>`}`}
+function answerQ(i){if(QANS!==null)return;QANS=i;if(QS[QI].o[i]===QS[QI].a)QSCORE++;renderQ()}
+function startQ(){QS=buildQs();QI=0;QSCORE=0;QANS=null;QFLIP=false;renderQ()}
+function setQMode(m){QMODE=m;[['quiz','#qModeQuiz'],['cards','#qModeCards']].forEach(([k,id])=>{$(id).className='px-3 py-1.5 rounded text-sm '+(k===m?'tab-on':'bg-slate-800 border border-slate-700 text-slate-300');$(id).setAttribute('aria-selected',k===m)});startQ()}
+$('#qModeQuiz').onclick=()=>setQMode('quiz');$('#qModeCards').onclick=()=>setQMode('cards');
+
 /* 05 DELIVER */
-const CK=['Aisle clearance check (900–1200 mm corridors)','Hood CFM vs. thermal load verification','MEP rough-ins (drain, water, power) within 900 mm of equipment','Equipment load within electrical panel capacity'];
+const CK=['Aisle clearance check (900–1200 mm corridors)','Hood CFM vs. thermal load verification','MEP rough-ins (drain, water, power) within 900 mm of equipment','Equipment load within electrical panel capacity','Access and exits: door width, 900 mm route to every unit, turning space'];
 const done=new Set();
-const AUTO=[0,1,2,3];
+const AUTO=[0,1,2,3,4];
 $('#checks').innerHTML=CK.map((c,i)=>`<li><label class="flex items-start gap-3 ${AUTO.includes(i)?'':'cursor-pointer'}"><input id="ck${i}" type="checkbox" class="mt-1 accent-blue-500 w-4 h-4" ${AUTO.includes(i)?'disabled':''} onchange="tick(${i},this.checked)"><span>${c}${AUTO.includes(i)?' <span class="ml-1 text-xs font-mono text-bp">auto</span>':''}</span></label></li>`).join('');
 function tick(i,v){v?done.add(i):done.delete(i);const p=Math.round(done.size/CK.length*100);$('#pct').textContent=p+'%';$('#bar').style.width=p+'%'}
 function setAuto(i,v){const el=$('#ck'+i);if(el)el.checked=v;tick(i,v)}
@@ -683,11 +964,12 @@ function dlPng(){const img=new Image();
  img.onerror=()=>toast('PNG export failed in this browser. Use the SVG instead.');
  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(planSvg())}
 function schedCsv(){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
- const rows=[['Item #','Description','Dimensions (mm)','Utility Loads'],...[...document.querySelectorAll('#sched tr')].map(tr=>[...tr.children].map(td=>td.textContent))];
+ const rows=[['Item #','Description','Dimensions (mm)','Utility Loads','Price'],...[...document.querySelectorAll('#sched tr')].map(tr=>[...tr.children].map(td=>td.textContent))];
  rows.push([],['',$('#schedTotal').textContent]);return rows.map(r=>r.map(q).join(',')).join('\r\n')}
 
-const PRE0={app:'horeca-sdt',v:1,label:'Restaurant kitchen',room:ROOMS.restaurant,panel:45,diversity:1,cfm:1000,eq:JSON.parse(JSON.stringify(EQ)),blocks:JSON.parse(JSON.stringify(BLK)),mep:JSON.parse(JSON.stringify(MEPS))};
-drawZones();buildMatrix();drawEq();renderRoom();renderMEP();renderBlocks();renderClear();sched();snapBase();lucide.createIcons();
+const PRE0={app:'horeca-sdt',v:1,venue:'restaurant',routes:KROUTES,label:'Restaurant kitchen',room:ROOMS.restaurant,panel:45,diversity:1,cfm:1000,eq:JSON.parse(JSON.stringify(EQ)),blocks:JSON.parse(JSON.stringify(BLK)),mep:JSON.parse(JSON.stringify(MEPS))};
+ROUTES=JSON.parse(JSON.stringify(KROUTES));setVenue('restaurant');renderCmp();
+drawZones();buildMatrix();drawEq();renderRoom();startQ();renderMEP();renderBlocks();renderClear();sched();snapBase();lucide.createIcons();
 </script>
 </body>
 </html>
